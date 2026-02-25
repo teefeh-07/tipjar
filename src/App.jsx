@@ -2,3 +2,6 @@ import React, { useEffect } from 'react';
 import Header from './components/Header.jsx';
 import Footer from './components/Footer.jsx';
 import Dashboard from './components/Dashboard.jsx';
+import SendTip from './components/SendTip.jsx';
+import TipHistory from './components/TipHistory.jsx';
+import Leaderboard from './components/Leaderboard.jsx';
