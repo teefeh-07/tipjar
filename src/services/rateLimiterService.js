@@ -126,3 +126,20 @@ export async function rateLimited(endpoint, fn) {
   return fn();
 }
 
+// Get rate limiter stats for debugging
+export function getRateLimiterStats() {
+  const stats = {};
+  for (const [endpoint, limiter] of limiters.entries()) {
+    stats[endpoint] = {
+      remaining: limiter.window.remaining(),
+      retryAfter: limiter.window.retryAfter(),
+      bucketTokens: limiter.bucket.tokens,
+    };
+  }
+  return stats;
+}
+
+// Reset all rate limiters
+export function resetLimiters() {
+  limiters.clear();
+}
