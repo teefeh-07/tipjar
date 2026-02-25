@@ -38,3 +38,8 @@
   )
 )
 
+;; Read-only functions
+(define-read-only (get-tip (sender principal) (recipient principal))
+  (map-get? tips { sender: sender, recipient: recipient })
+)
+
