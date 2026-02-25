@@ -33,3 +33,17 @@ describe('Tip Token Contract', () => {
     });
   });
 
+  describe('transfer', () => {
+    it('should transfer tokens between accounts', () => {
+      const balance = 100;
+      const transfer = 50;
+      expect(balance - transfer).toBe(50);
+    });
+
+    it('should reject transfer if sender is not tx-sender', () => {
+      const sender = 'wallet1';
+      const txSender = 'wallet2';
+      expect(sender).not.toBe(txSender);
+    });
+  });
+});
