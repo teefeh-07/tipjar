@@ -105,3 +105,21 @@
   )
 )
 
+;; Refund expired escrow (sender only)
+(define-public (refund-escrow (escrow-id uint))
+  (let
+    (
+      (escrow (unwrap! (map-get? escrows { escrow-id: escrow-id }) ERR-ESCROW-NOT-FOUND))
+    )
+    (asserts! (is-eq (get sender escrow) tx-sender) ERR-NOT-AUTHORIZED)
+    (asserts! (not (get claimed escrow)) ERR-ALREADY-CLAIMED)
+    (asserts! (>= block-height (get timeout-block escrow)) ERR-NOT-EXPIRED)
+    (map-set escrows
+      { escrow-id: escrow-id }
+      (merge escrow { refunded: true })
+    )
+    (var-set total-refunded (+ (var-get total-refunded) (get amount escrow)))
+    (ok (get amount escrow))
+  )
+)
+
