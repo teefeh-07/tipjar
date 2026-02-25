@@ -83,3 +83,23 @@
   )
 )
 
+;; Approve spending proposal
+(define-public (approve-proposal (proposal-id uint))
+  (let
+    (
+      (proposal (unwrap! (map-get? spending-proposals { proposal-id: proposal-id }) ERR-PROPOSAL-NOT-FOUND))
+    )
+    (asserts! (not (get executed proposal)) ERR-ALREADY-EXECUTED)
+    (asserts! (is-none (map-get? proposal-signers { proposal-id: proposal-id, signer: tx-sender })) ERR-ALREADY-SIGNED)
+    (map-set proposal-signers
+      { proposal-id: proposal-id, signer: tx-sender }
+      { approved: true }
+    )
+    (map-set spending-proposals
+      { proposal-id: proposal-id }
+      (merge proposal { approvals: (+ (get approvals proposal) u1) })
+    )
+    (ok (+ (get approvals proposal) u1))
+  )
+)
+
