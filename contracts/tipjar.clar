@@ -47,3 +47,11 @@
   (map-get? creator-totals { creator: creator })
 )
 
+(define-read-only (get-total-tips)
+  (ok (var-get total-tips-sent))
+)
+
+(define-read-only (get-tip-count)
+  (ok (var-get total-tip-count))
+)
+
