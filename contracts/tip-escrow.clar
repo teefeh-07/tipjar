@@ -71,3 +71,19 @@
   )
 )
 
+;; Mark condition as met (for milestone/approval types)
+(define-public (mark-condition-met (escrow-id uint))
+  (let
+    (
+      (escrow (unwrap! (map-get? escrows { escrow-id: escrow-id }) ERR-ESCROW-NOT-FOUND))
+    )
+    (asserts! (is-eq (get sender escrow) tx-sender) ERR-NOT-AUTHORIZED)
+    (asserts! (not (get claimed escrow)) ERR-ALREADY-CLAIMED)
+    (map-set escrows
+      { escrow-id: escrow-id }
+      (merge escrow { condition-met: true })
+    )
+    (ok true)
+  )
+)
+
