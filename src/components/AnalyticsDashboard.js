@@ -107,3 +107,59 @@ function ConversionFunnel({ funnel, conversionRate }) {
   );
 }
 
+// Main Analytics Dashboard component
+export default function AnalyticsDashboard() {
+  const [metrics, setMetrics] = useState(null);
+  const [funnel, setFunnel] = useState(null);
+  const [activeTab, setActiveTab] = useState('overview');
+  
+  useEffect(() => {
+    setMetrics(computeTipMetrics());
+    setFunnel(computeFunnelMetrics());
+    const interval = setInterval(() => {
+      setMetrics(computeTipMetrics());
+      setFunnel(computeFunnelMetrics());
+    }, 15000);
+    return () => clearInterval(interval);
+  }, []);
+  
+  if (!metrics) {
+    return React.createElement('div', { className: 'analytics-loading' }, 'Loading analytics...');
+  }
+  
+  return React.createElement('div', { className: 'analytics-dashboard' },
+    React.createElement('div', { className: 'analytics-header' },
+      React.createElement('h2', null, '📊 Platform Analytics'),
+      React.createElement('div', { className: 'analytics-tabs' },
+        ['overview', 'trends', 'funnel'].map(tab =>
+          React.createElement('button', {
+            key: tab,
+            className: `tab-btn ${activeTab === tab ? 'active' : ''}`,
+            onClick: () => setActiveTab(tab)
+          }, tab.charAt(0).toUpperCase() + tab.slice(1))
+        )
+      )
+    ),
+    React.createElement('div', { className: 'metrics-grid' },
+      React.createElement('div', { className: 'metric-card glass' },
+        React.createElement('p', { className: 'metric-label' }, 'Total Tips'),
+        React.createElement(AnimatedCounter, { value: metrics.totalTips }),
+        React.createElement(MiniChart, { data: metrics.hourlyDistribution })
+      ),
+      React.createElement('div', { className: 'metric-card glass' },
+        React.createElement('p', { className: 'metric-label' }, 'Total Volume'),
+        React.createElement(AnimatedCounter, { value: metrics.totalVolume, suffix: ' μSTX' })
+      ),
+      React.createElement('div', { className: 'metric-card glass' },
+        React.createElement('p', { className: 'metric-label' }, 'Avg Tip'),
+        React.createElement(AnimatedCounter, { value: Math.round(metrics.averageTip), suffix: ' μSTX' })
+      ),
+      React.createElement('div', { className: 'metric-card glass' },
+        React.createElement('p', { className: 'metric-label' }, 'Unique Recipients'),
+        React.createElement(AnimatedCounter, { value: metrics.uniqueRecipients })
+      )
+    ),
+    activeTab === 'trends' && React.createElement(HourlyHeatmap, { data: metrics.hourlyDistribution }),
+    activeTab === 'funnel' && funnel && React.createElement(ConversionFunnel, funnel)
+  );
+}
