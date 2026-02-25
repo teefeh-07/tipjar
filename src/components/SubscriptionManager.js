@@ -40,3 +40,47 @@ function TierCard({ tier, onSubscribe, isSubscribed }) {
   );
 }
 
+// Create tier form
+function CreateTierForm({ onSubmit }) {
+  const [name, setName] = useState('');
+  const [amount, setAmount] = useState('');
+  const [perks, setPerks] = useState('');
+  
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSubmit({ name, amount: parseInt(amount), perks });
+    setName('');
+    setAmount('');
+    setPerks('');
+  };
+  
+  return React.createElement('form', {
+    className: 'create-tier-form',
+    onSubmit: handleSubmit
+  },
+    React.createElement('h3', null, '➕ Create Subscription Tier'),
+    React.createElement('div', { className: 'form-group' },
+      React.createElement('label', null, 'Tier Name'),
+      React.createElement('input', {
+        type: 'text', value: name, placeholder: 'e.g., Gold',
+        onChange: (e) => setName(e.target.value), required: true
+      })
+    ),
+    React.createElement('div', { className: 'form-group' },
+      React.createElement('label', null, 'Amount per Epoch (μSTX)'),
+      React.createElement('input', {
+        type: 'number', value: amount, placeholder: '1000000',
+        onChange: (e) => setAmount(e.target.value), required: true, min: '1'
+      })
+    ),
+    React.createElement('div', { className: 'form-group' },
+      React.createElement('label', null, 'Perks Description'),
+      React.createElement('textarea', {
+        value: perks, placeholder: 'Describe the perks for this tier...',
+        onChange: (e) => setPerks(e.target.value), required: true, rows: 3
+      })
+    ),
+    React.createElement('button', { type: 'submit', className: 'btn-create-tier' }, 'Create Tier')
+  );
+}
+
