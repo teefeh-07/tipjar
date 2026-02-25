@@ -13,3 +13,5 @@
   { title: (string-utf8 128), proposer: principal, votes-for: uint, votes-against: uint, start-block: uint, executed: bool }
 )
 
+(define-map votes { proposal-id: uint, voter: principal } { vote: bool })
+
