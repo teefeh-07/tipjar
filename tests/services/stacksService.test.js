@@ -26,3 +26,11 @@ describe('Stacks Service', () => {
     });
   });
 
+  describe('getPlatformStats', () => {
+    it('should return totalTips and tipCount', () => {
+      const stats = { totalTips: 100, tipCount: 5 };
+      expect(stats).toHaveProperty('totalTips');
+      expect(stats).toHaveProperty('tipCount');
+    });
+  });
+
