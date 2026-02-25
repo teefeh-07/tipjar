@@ -78,3 +78,10 @@ export async function requestStxTransfer(recipient, amount) {
   return result;
 }
 
+export function getSession() {
+  return currentSession;
+}
+
+export function isConnected() {
+  return currentSession !== null;
+}
