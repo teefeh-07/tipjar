@@ -14,3 +14,6 @@ import {
   bufferCVFromString,
 } from '@stacks/transactions';
 
+import { openSTXTransfer, openContractCall } from '@stacks/connect';
+import { DEFAULT_NETWORK, API_URL } from '../config/network.js';
+
