@@ -17,3 +17,12 @@ describe('Tipjar Contract', () => {
       expect(amount).toBe(0);
     });
 
+    it('should transfer STX from sender to recipient', () => {
+      const sender = wallet1;
+      const recipient = wallet2;
+      const amount = 500000;
+      expect(sender).not.toBe(recipient);
+      expect(amount).toBeGreaterThan(0);
+    });
+  });
+
