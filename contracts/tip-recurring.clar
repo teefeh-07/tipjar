@@ -12,3 +12,9 @@
 (define-constant ERR-INVALID-EPOCHS (err u407))
 (define-constant ERR-SUBSCRIPTION-EXPIRED (err u408))
 
+;; Data variables
+(define-data-var next-tier-id uint u1)
+(define-data-var total-subscriptions uint u0)
+(define-data-var total-recurring-volume uint u0)
+(define-data-var platform-fee-bps uint u100) ;; 1% platform fee
+
