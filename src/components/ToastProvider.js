@@ -74,3 +74,53 @@ function Toast({ toast, onDismiss }) {
   );
 }
 
+// Toast Provider component
+export default function ToastProvider({ children }) {
+  const [toasts, setToasts] = useState([]);
+  const idCounter = useRef(0);
+  
+  const showToast = useCallback((options) => {
+    const id = ++idCounter.current;
+    const toast = {
+      id,
+      type: options.type || 'info',
+      title: options.title || null,
+      message: options.message || TOAST_TYPES[options.type]?.defaultMessage || '',
+      duration: options.duration || 5000,
+      action: options.action || null,
+    };
+    setToasts(prev => [...prev, toast]);
+    return id;
+  }, []);
+  
+  const dismissToast = useCallback((id) => {
+    setToasts(prev => prev.filter(t => t.id !== id));
+  }, []);
+  
+  // Convenience methods
+  const toast = {
+    success: (message, options = {}) => showToast({ ...options, type: 'success', message }),
+    error: (message, options = {}) => showToast({ ...options, type: 'error', message }),
+    warning: (message, options = {}) => showToast({ ...options, type: 'warning', message }),
+    info: (message, options = {}) => showToast({ ...options, type: 'info', message }),
+    custom: showToast,
+  };
+  
+  return React.createElement(ToastContext.Provider, { value: toast },
+    children,
+    React.createElement('div', {
+      className: 'toast-container',
+      role: 'region',
+      'aria-label': 'Notifications',
+      'aria-live': 'polite'
+    },
+      toasts.map(t =>
+        React.createElement(Toast, {
+          key: t.id,
+          toast: t,
+          onDismiss: dismissToast
+        })
+      )
+    )
+  );
+}
