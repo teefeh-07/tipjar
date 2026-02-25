@@ -26,3 +26,22 @@
 (define-data-var next-badge-id uint u1)
 (define-data-var total-badges-minted uint u0)
 
+;; Badge metadata storage
+(define-map badge-metadata
+  { badge-id: uint }
+  {
+    badge-type: uint,
+    owner: principal,
+    name: (string-ascii 64),
+    description: (string-ascii 256),
+    image-uri: (string-ascii 256),
+    earned-at-block: uint
+  }
+)
+
+;; Track which badges a user has earned
+(define-map user-badges
+  { user: principal, badge-type: uint }
+  { badge-id: uint, earned: bool }
+)
+
