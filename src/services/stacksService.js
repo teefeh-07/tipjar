@@ -20,3 +20,18 @@ import { DEFAULT_NETWORK, API_URL } from '../config/network.js';
 const CONTRACT_ADDRESS = process.env.DEPLOYER_ADDRESS || 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM';
 const CONTRACT_NAME = 'tipjar';
 
+export async function sendTip(recipientAddress, amountInMicroStx) {
+  const options = {
+    recipient: recipientAddress,
+    amount: amountInMicroStx,
+    memo: 'Tip via Tipjar',
+    network: DEFAULT_NETWORK,
+    anchorMode: AnchorMode.Any,
+    onFinish: (data) => {
+      console.log('Transaction submitted:', data.txId);
+      return data;
+    },
+  };
+  return openSTXTransfer(options);
+}
+
