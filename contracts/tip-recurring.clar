@@ -43,3 +43,9 @@
   }
 )
 
+;; Creator earnings tracker
+(define-map creator-recurring-earnings
+  { creator: principal }
+  { total-earned: uint, active-subscribers: uint }
+)
+
