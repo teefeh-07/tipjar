@@ -34,3 +34,14 @@ Opens the WalletConnect modal and returns the session.
 #### `disconnectWallet()`
 Disconnects the current WalletConnect session.
 
+### chainhooksService
+
+#### `initChainhooks()`
+Initializes the Chainhooks client with API credentials.
+
+#### `registerTipWebhook(contractAddress, contractName)`
+Registers a webhook for tip contract call events.
+
+#### `handleWebhookPayload(payload)`
+Processes incoming webhook payloads from Chainhooks.
+
