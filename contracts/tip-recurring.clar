@@ -113,3 +113,20 @@
   )
 )
 
+;; Read-only: get subscription details
+(define-read-only (get-subscription-status (subscriber principal) (tier-id uint))
+  (map-get? active-subscriptions { subscriber: subscriber, tier-id: tier-id })
+)
+
+;; Read-only: get tier info
+(define-read-only (get-tier-info (tier-id uint))
+  (map-get? subscription-tiers { tier-id: tier-id })
+)
+
+;; Read-only: get platform stats
+(define-read-only (get-recurring-stats)
+  {
+    total-subscriptions: (var-get total-subscriptions),
+    total-volume: (var-get total-recurring-volume)
+  }
+)
