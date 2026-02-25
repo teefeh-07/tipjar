@@ -49,3 +49,33 @@ export function generateTipShareText(receipt, platform = 'twitter') {
   return texts[platform] || texts.twitter;
 }
 
+// Generate share URL for social platforms
+export function getShareUrl(text, platform = 'twitter') {
+  const config = PLATFORMS[platform];
+  if (!config || !config.shareUrl) return null;
+  
+  const params = new URLSearchParams();
+  if (platform === 'twitter') {
+    params.set('text', text);
+  } else if (platform === 'farcaster') {
+    params.set('text', text);
+  }
+  
+  return `${config.shareUrl}?${params.toString()}`;
+}
+
+// Share to platform
+export async function shareToSocial(tipData, platform = 'twitter') {
+  const receipt = generateTipReceipt(tipData);
+  const text = generateTipShareText(receipt, platform);
+  
+  if (platform === 'discord') {
+    await navigator.clipboard.writeText(text);
+    return { copied: true, text };
+  }
+  
+  const url = getShareUrl(text, platform);
+  if (url) window.open(url, '_blank', 'width=600,height=400');
+  return { url, text };
+}
+
