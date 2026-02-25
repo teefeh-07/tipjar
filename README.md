@@ -12,3 +12,12 @@ A decentralized tipping platform built on the Stacks blockchain. Send micro-tips
 - Real-time on-chain event monitoring via Chainhooks
 - Multi-wallet support (Hiro Wallet + WalletConnect)
 
+## Tech Stack
+
+- **Smart Contracts**: Clarity 4 (epoch 3.3) on Stacks
+- **Frontend**: React 18 with Vite
+- **Blockchain SDK**: @stacks/connect, @stacks/transactions
+- **Wallet**: WalletConnect v2 Sign Client
+- **Monitoring**: @hirosystems/chainhooks-client
+- **Testing**: Vitest
+
