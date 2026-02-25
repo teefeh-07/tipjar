@@ -26,3 +26,11 @@
   (map-get? user-streaks user)
 )
 
+(define-read-only (get-reward-multiplier (user principal))
+  (let ((streak-data (default-to { current-streak: u0, longest-streak: u0, last-tip-block: u0 } (map-get? user-streaks user))))
+    (if (>= (get current-streak streak-data) STREAK-THRESHOLD)
+      (ok REWARD-MULTIPLIER)
+      (ok u1)
+    )
+  )
+)
