@@ -5,3 +5,7 @@ name = "devnet"
 mnemonic = "twice particular affair smile piece dough thrive dismiss invest primary iron opinion wish pig calm spread fence confirm meadow awkward surprise price tumble knee"
 balance = 100_000_000_000_000
 
+[accounts.wallet_1]
+mnemonic = "sell invite acquire kitten bamboo drastic jelly vivid peace spawn twice guilt pave pen trash pretty park cube fragile unaware remain midnight betray rebuild"
+balance = 100_000_000_000_000
+
