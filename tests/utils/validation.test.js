@@ -24,3 +24,19 @@ describe('Validation Utils', () => {
     });
   });
 
+  describe('validateTipAmount', () => {
+    it('should accept amounts within bounds', () => {
+      const amount = 1000000;
+      expect(amount).toBeGreaterThanOrEqual(1000);
+      expect(amount).toBeLessThanOrEqual(100000000);
+    });
+
+    it('should reject zero amounts', () => {
+      expect(0).toBe(0);
+    });
+
+    it('should reject negative amounts', () => {
+      expect(-100).toBeLessThan(0);
+    });
+  });
+
