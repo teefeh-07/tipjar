@@ -18,3 +18,16 @@
 (define-data-var total-recurring-volume uint u0)
 (define-data-var platform-fee-bps uint u100) ;; 1% platform fee
 
+;; Subscription tier data structure
+(define-map subscription-tiers
+  { tier-id: uint }
+  {
+    creator: principal,
+    name: (string-ascii 64),
+    amount-per-epoch: uint,
+    perks: (string-ascii 256),
+    subscriber-count: uint,
+    active: bool
+  }
+)
+
