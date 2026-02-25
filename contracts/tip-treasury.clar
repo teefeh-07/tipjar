@@ -103,3 +103,22 @@
   )
 )
 
+;; Read-only: get treasury balance
+(define-read-only (get-treasury-balance)
+  (var-get treasury-balance)
+)
+
+;; Read-only: get proposal details
+(define-read-only (get-proposal (proposal-id uint))
+  (map-get? spending-proposals { proposal-id: proposal-id })
+)
+
+;; Read-only: get treasury stats
+(define-read-only (get-treasury-stats)
+  {
+    balance: (var-get treasury-balance),
+    total-received: (var-get total-received),
+    total-disbursed: (var-get total-disbursed),
+    pending-proposals: (- (var-get next-proposal-id) u1)
+  }
+)
