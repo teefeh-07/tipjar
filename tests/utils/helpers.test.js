@@ -35,3 +35,11 @@ describe('Helper Utils', () => {
     });
   });
 
+  describe('generateId', () => {
+    it('should generate unique IDs', () => {
+      const id1 = Date.now().toString(36) + 'a';
+      const id2 = Date.now().toString(36) + 'b';
+      expect(id1).not.toBe(id2);
+    });
+  });
+});
