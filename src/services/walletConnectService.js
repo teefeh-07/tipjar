@@ -55,3 +55,13 @@ export async function connectWallet() {
   return currentSession;
 }
 
+export async function disconnectWallet() {
+  if (currentSession) {
+    await signClient.disconnect({
+      topic: currentSession.topic,
+      reason: { code: 6000, message: 'User disconnected' },
+    });
+    currentSession = null;
+  }
+}
+
