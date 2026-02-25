@@ -57,3 +57,26 @@ function MiniChart({ data, width = 200, height = 60, color = '#7c3aed' }) {
   );
 }
 
+// Hourly activity heatmap
+function HourlyHeatmap({ data }) {
+  const maxVal = Math.max(...data, 1);
+  const hours = ['12a','1a','2a','3a','4a','5a','6a','7a','8a','9a','10a','11a',
+                  '12p','1p','2p','3p','4p','5p','6p','7p','8p','9p','10p','11p'];
+  
+  return React.createElement('div', { className: 'heatmap-container' },
+    React.createElement('h4', null, 'Activity by Hour'),
+    React.createElement('div', { className: 'heatmap-grid' },
+      data.map((val, i) => {
+        const intensity = val / maxVal;
+        const bg = `rgba(124, 58, 237, ${intensity * 0.8 + 0.1})`;
+        return React.createElement('div', {
+          key: i,
+          className: 'heatmap-cell',
+          style: { backgroundColor: bg },
+          title: `${hours[i]}: ${val} tips`
+        }, hours[i]);
+      })
+    )
+  );
+}
+
