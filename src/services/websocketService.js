@@ -18,3 +18,38 @@ const messageQueue = [];
 const subscriptions = new Map();
 const eventListeners = new Map();
 
+// Connect to WebSocket server
+export function connect(userAddress = null) {
+  if (ws && ws.readyState === WebSocket.OPEN) return;
+  
+  const url = userAddress ? `${WS_URL}?address=${userAddress}` : WS_URL;
+  ws = new WebSocket(url);
+  
+  ws.onopen = () => {
+    console.log('WebSocket connected');
+    isConnected = true;
+    reconnectAttempts = 0;
+    startHeartbeat();
+    replayQueue();
+    resubscribe();
+    emit('connection', { status: 'connected' });
+  };
+  
+  ws.onclose = (event) => {
+    console.log(`WebSocket closed: ${event.code} ${event.reason}`);
+    isConnected = false;
+    stopHeartbeat();
+    emit('connection', { status: 'disconnected', code: event.code });
+    scheduleReconnect();
+  };
+  
+  ws.onerror = (error) => {
+    console.error('WebSocket error:', error);
+    emit('error', { error });
+  };
+  
+  ws.onmessage = (event) => {
+    handleMessage(event.data);
+  };
+}
+
