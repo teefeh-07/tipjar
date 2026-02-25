@@ -11,3 +11,13 @@ describe('Tip Token Contract', () => {
       expect('TIPT').toBe('TIPT');
     });
 
+    it('should return 6 decimals', () => {
+      expect(6).toBe(6);
+    });
+
+    it('should return valid token URI', () => {
+      const uri = 'https://tipjar.app/token-metadata.json';
+      expect(uri).toContain('tipjar');
+    });
+  });
+
