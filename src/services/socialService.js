@@ -79,3 +79,33 @@ export async function shareToSocial(tipData, platform = 'twitter') {
   return { url, text };
 }
 
+// Generate creator tip page deep link
+export function generateCreatorLink(creatorAddress, prefilledAmount = null) {
+  const base = `https://tipjar.app/tip/${creatorAddress}`;
+  if (prefilledAmount) {
+    return `${base}?amount=${prefilledAmount}`;
+  }
+  return base;
+}
+
+// Generate badge achievement share text
+export function generateBadgeShareText(badgeName, badgeEmoji = '🏅') {
+  return `${badgeEmoji} Just earned the "${badgeName}" badge on ${APP_NAME}!\n\nBuilding my reputation on the Stacks blockchain 💎\n\nhttps://tipjar.app/badges`;
+}
+
+// Copy text to clipboard with fallback
+export async function copyToClipboard(text) {
+  try {
+    await navigator.clipboard.writeText(text);
+    return true;
+  } catch (err) {
+    // Fallback for older browsers
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+    return true;
+  }
+}
