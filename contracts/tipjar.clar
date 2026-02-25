@@ -30,3 +30,11 @@
   )
 )
 
+(define-public (register-creator)
+  (begin
+    (map-set registered-creators tx-sender true)
+    (map-set creator-totals { creator: tx-sender } { total-received: u0, tip-count: u0 })
+    (ok true)
+  )
+)
+
