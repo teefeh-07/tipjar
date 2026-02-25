@@ -18,3 +18,29 @@
 (define-constant TIME-LOCK-BLOCKS uint u144) ;; ~1 day for large amounts
 (define-constant LARGE-AMOUNT-THRESHOLD uint u1000000000) ;; 1,000 STX
 
+;; State
+(define-data-var next-proposal-id uint u1)
+(define-data-var treasury-balance uint u0)
+(define-data-var total-received uint u0)
+(define-data-var total-disbursed uint u0)
+
+;; Spending proposal structure
+(define-map spending-proposals
+  { proposal-id: uint }
+  {
+    proposer: principal,
+    recipient: principal,
+    amount: uint,
+    description: (string-ascii 256),
+    approvals: uint,
+    executed: bool,
+    created-block: uint
+  }
+)
+
+;; Track signer approvals
+(define-map proposal-signers
+  { proposal-id: uint, signer: principal }
+  { approved: bool }
+)
+
