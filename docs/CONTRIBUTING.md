@@ -40,3 +40,10 @@ Example: `feat: add tip amount validation to SendTip form`
 - Ensure all tests pass
 - Request review from at least one maintainer
 
+## Code Style
+
+- Use ES modules (import/export)
+- Follow existing naming conventions
+- Add JSDoc comments for public functions
+- Keep functions small and focused
+- Write tests for new functionality
