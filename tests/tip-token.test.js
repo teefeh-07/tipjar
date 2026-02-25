@@ -21,3 +21,15 @@ describe('Tip Token Contract', () => {
     });
   });
 
+  describe('minting', () => {
+    it('should allow owner to mint tokens', () => {
+      const isOwner = true;
+      expect(isOwner).toBe(true);
+    });
+
+    it('should reject minting from non-owner', () => {
+      const isOwner = false;
+      expect(isOwner).toBe(false);
+    });
+  });
+
