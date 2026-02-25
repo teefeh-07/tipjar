@@ -9,3 +9,10 @@ export function validateStxAddress(address) {
   return { valid: true, error: null };
 }
 
+export function validateTipAmount(amountMicro) {
+  if (isNaN(amountMicro) || amountMicro <= 0) return { valid: false, error: 'Amount must be positive' };
+  if (amountMicro < MIN_TIP_MICRO) return { valid: false, error: 'Amount below minimum tip' };
+  if (amountMicro > MAX_TIP_MICRO) return { valid: false, error: 'Amount exceeds maximum tip' };
+  return { valid: true, error: null };
+}
+
