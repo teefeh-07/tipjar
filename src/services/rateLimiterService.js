@@ -99,3 +99,30 @@ function getLimiter(endpoint) {
   return limiters.get(endpoint);
 }
 
+// Check if request is allowed
+export function isAllowed(endpoint) {
+  const limiter = getLimiter(endpoint);
+  return limiter.window.tryRequest() && limiter.bucket.tryConsume();
+}
+
+// Get remaining requests for endpoint
+export function getRemaining(endpoint) {
+  const limiter = getLimiter(endpoint);
+  return limiter.window.remaining();
+}
+
+// Get retry-after time in ms
+export function getRetryAfter(endpoint) {
+  const limiter = getLimiter(endpoint);
+  return limiter.window.retryAfter();
+}
+
+// Rate-limited wrapper for async functions
+export async function rateLimited(endpoint, fn) {
+  if (!isAllowed(endpoint)) {
+    const retryAfter = getRetryAfter(endpoint);
+    throw new Error(`Rate limited on ${endpoint}. Retry after ${retryAfter}ms`);
+  }
+  return fn();
+}
+
