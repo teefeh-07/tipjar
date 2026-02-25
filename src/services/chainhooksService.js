@@ -27,3 +27,13 @@ export async function registerTipWebhook(contractAddress, contractName) {
   return webhook;
 }
 
+export async function registerTransferWebhook() {
+  const webhook = await chainhooksClient.createHook({
+    name: 'stx-transfer-monitor',
+    version: 1,
+    chain: 'stacks',
+    networks: { testnet: { if_this: { scope: 'stx_event', actions: ['transfer'] }, then_that: { http_post: { url: `${WEBHOOK_URL}/transfers`, authorization_header: 'Bearer webhook-secret' } } } },
+  });
+  return webhook;
+}
+
