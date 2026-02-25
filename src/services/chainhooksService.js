@@ -16,3 +16,14 @@ export async function initChainhooks() {
   return chainhooksClient;
 }
 
+export async function registerTipWebhook(contractAddress, contractName) {
+  const webhook = await chainhooksClient.createHook({
+    name: 'tip-monitor',
+    version: 1,
+    chain: 'stacks',
+    networks: { testnet: { if_this: { scope: 'contract_call', contract_identifier: `${contractAddress}.${contractName}`, method: 'send-tip' }, then_that: { http_post: { url: WEBHOOK_URL, authorization_header: 'Bearer webhook-secret' } } } },
+  });
+  console.log('Webhook registered:', webhook);
+  return webhook;
+}
+
