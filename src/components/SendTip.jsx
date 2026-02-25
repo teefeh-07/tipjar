@@ -39,3 +39,12 @@ export default function SendTip() {
     setAmount((value / 1000000).toString());
   };
 
+  return (
+    <form onSubmit={handleSubmit} className="send-tip-form">
+      <h2>Send a Tip</h2>
+      {error && <div className="form-error">{error}</div>}
+      {status && <div className="form-success">{status}</div>}
+      <div className="form-group">
+        <label htmlFor="recipient">Recipient Address</label>
+        <input id="recipient" type="text" value={recipient} onChange={e => setRecipient(e.target.value)} placeholder="ST..." required />
+      </div>
