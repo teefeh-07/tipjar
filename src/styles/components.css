@@ -62,3 +62,20 @@
 .form-error { background: rgba(239,68,68,0.1); color: var(--color-error); padding: var(--space-2); border-radius: var(--radius-sm); margin-bottom: var(--space-3); }
 .form-success { background: rgba(34,197,94,0.1); color: var(--color-success); padding: var(--space-2); border-radius: var(--radius-sm); margin-bottom: var(--space-3); }
 
+.tip-history { margin: var(--space-6) 0; }
+.tip-list { list-style: none; }
+.tip-item {
+  background: var(--color-surface);
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-2);
+  border: 1px solid var(--color-surface-alt);
+}
+.tip-recipient { font-family: var(--font-mono); font-size: var(--text-sm); }
+.tip-amount { color: var(--color-accent); font-weight: 600; font-size: var(--text-lg); }
+.tip-memo { color: var(--color-text-muted); font-style: italic; font-size: var(--text-sm); }
+.tip-meta { display: flex; justify-content: space-between; margin-top: var(--space-2); font-size: var(--text-xs); color: var(--color-text-muted); }
+.tip-status--pending { color: var(--color-warning); }
+.tip-status--confirmed { color: var(--color-success); }
+.tip-status--failed { color: var(--color-error); }
+
