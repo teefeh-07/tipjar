@@ -15,3 +15,11 @@
   (ok "TIPT")
 )
 
+(define-read-only (get-decimals)
+  (ok u6)
+)
+
+(define-read-only (get-token-uri)
+  (ok (some u"https://tipjar.app/token-metadata.json"))
+)
+
