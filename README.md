@@ -21,3 +21,11 @@ A decentralized tipping platform built on the Stacks blockchain. Send micro-tips
 - **Monitoring**: @hirosystems/chainhooks-client
 - **Testing**: Vitest
 
+## Installation
+
+```bash
+git clone https://github.com/teefeh-07/tipjar.git
+cd tipjar
+npm install
+```
+
