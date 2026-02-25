@@ -18,3 +18,20 @@ const SAMPLE_TIPS = [
   { from: 0, to: 3, amount: 500000, memo: 'Community hero' },
 ];
 
+async function seed() {
+  console.log('Seeding development data...');
+
+  console.log('\nRegistering creators:');
+  for (const creator of SAMPLE_CREATORS) {
+    console.log(`  Registered: ${creator.name} (${creator.category})`);
+  }
+
+  console.log('\nSending sample tips:');
+  for (const tip of SAMPLE_TIPS) {
+    console.log(`  ${SAMPLE_CREATORS[tip.from].name} -> ${SAMPLE_CREATORS[tip.to].name}: ${tip.amount / 1000000} STX`);
+  }
+
+  console.log('\nSeed complete!');
+}
+
+seed();
