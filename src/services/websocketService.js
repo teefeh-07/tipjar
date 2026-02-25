@@ -86,3 +86,33 @@ export function send(type, data = {}, channel = null) {
   }
 }
 
+// Subscribe to event channel
+export function subscribe(channel, handler) {
+  if (!subscriptions.has(channel)) {
+    subscriptions.set(channel, new Set());
+  }
+  subscriptions.get(channel).add(handler);
+  
+  // Tell server about subscription
+  send('subscribe', { channel });
+  
+  // Return unsubscribe function
+  return () => {
+    const handlers = subscriptions.get(channel);
+    if (handlers) {
+      handlers.delete(handler);
+      if (handlers.size === 0) {
+        subscriptions.delete(channel);
+        send('unsubscribe', { channel });
+      }
+    }
+  };
+}
+
+// Resubscribe to all channels after reconnect
+function resubscribe() {
+  for (const channel of subscriptions.keys()) {
+    send('subscribe', { channel });
+  }
+}
+
