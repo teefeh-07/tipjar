@@ -43,3 +43,7 @@
   (map-get? tips { sender: sender, recipient: recipient })
 )
 
+(define-read-only (get-creator-totals (creator principal))
+  (map-get? creator-totals { creator: creator })
+)
+
