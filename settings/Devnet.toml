@@ -13,3 +13,6 @@ balance = 100_000_000_000_000
 mnemonic = "hold excess usual excess ring elephant install account animal idle injury canvas lava mean solo decade bounce gather copy decide captain exotic intact leave"
 balance = 100_000_000_000_000
 
+[accounts.wallet_3]
+mnemonic = "cycle puppy glare enroll cost improve round trend wrist mushroom scorpion tower claim oppose clever elephant dinosaur eight problem before frozen dune wagon high"
+balance = 100_000_000_000_000
