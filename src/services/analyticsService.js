@@ -116,3 +116,37 @@ export function flushEvents() {
   return eventsToSend;
 }
 
+// Compute tipping metrics from stored events
+export function computeTipMetrics() {
+  try {
+    const events = JSON.parse(localStorage.getItem('tipjar_analytics') || '[]');
+    const tipEvents = events.filter(e => e.type === ANALYTICS_EVENTS.TIP_CONFIRMED);
+    
+    const totalTips = tipEvents.length;
+    const totalVolume = tipEvents.reduce((sum, e) => sum + (e.data.amount || 0), 0);
+    const averageTip = totalTips > 0 ? totalVolume / totalTips : 0;
+    const uniqueRecipients = new Set(tipEvents.map(e => e.data.recipient)).size;
+    
+    // Compute hourly distribution
+    const hourlyDistribution = new Array(24).fill(0);
+    tipEvents.forEach(e => {
+      const hour = new Date(e.timestamp).getHours();
+      hourlyDistribution[hour]++;
+    });
+    
+    const peakHour = hourlyDistribution.indexOf(Math.max(...hourlyDistribution));
+    
+    return {
+      totalTips,
+      totalVolume,
+      averageTip,
+      uniqueRecipients,
+      hourlyDistribution,
+      peakHour,
+    };
+  } catch (err) {
+    console.error('Failed to compute metrics:', err);
+    return null;
+  }
+}
+
