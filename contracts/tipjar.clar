@@ -17,3 +17,8 @@
 (define-map creator-totals { creator: principal } { total-received: uint, tip-count: uint })
 (define-map registered-creators principal bool)
 
+;; Public functions
+(define-public (send-tip (recipient principal) (amount uint))
+  (begin
+    (asserts! (> amount u0) ERR-INVALID-AMOUNT)
+    (try! (stx-transfer? amount tx-sender recipient))
