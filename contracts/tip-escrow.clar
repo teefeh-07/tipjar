@@ -41,3 +41,33 @@
   }
 )
 
+;; Create a new escrow tip
+(define-public (create-escrow (recipient principal) (amount uint) (escrow-type uint) (memo (string-ascii 128)) (timeout-blocks uint))
+  (let
+    (
+      (escrow-id (var-get next-escrow-id))
+    )
+    (asserts! (> amount u0) ERR-ZERO-AMOUNT)
+    (asserts! (> timeout-blocks u0) ERR-INVALID-TIMEOUT)
+    (try! (stx-transfer? amount tx-sender (as-contract tx-sender)))
+    (map-set escrows
+      { escrow-id: escrow-id }
+      {
+        sender: tx-sender,
+        recipient: recipient,
+        amount: amount,
+        escrow-type: escrow-type,
+        memo: memo,
+        created-block: block-height,
+        timeout-block: (+ block-height timeout-blocks),
+        claimed: false,
+        refunded: false,
+        condition-met: false
+      }
+    )
+    (var-set next-escrow-id (+ escrow-id u1))
+    (var-set total-escrowed (+ (var-get total-escrowed) amount))
+    (ok escrow-id)
+  )
+)
+
