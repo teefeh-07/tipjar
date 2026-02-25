@@ -29,3 +29,16 @@ cd tipjar
 npm install
 ```
 
+## Configuration
+
+Copy `.env.example` to `.env` and fill in your values:
+
+```bash
+cp .env.example .env
+```
+
+Required variables:
+- `WALLETCONNECT_PROJECT_ID` - Get from cloud.walletconnect.com
+- `CHAINHOOKS_API_KEY` - Get from Hiro Platform
+- `STACKS_NETWORK` - mainnet, testnet, or devnet
+
