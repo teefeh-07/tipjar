@@ -11,3 +11,5 @@ export function getNetwork(env = 'testnet') {
   return NETWORK_CONFIG[env] || NETWORK_CONFIG.testnet;
 }
 
+export const DEFAULT_NETWORK = getNetwork(process.env.STACKS_NETWORK || 'testnet');
+
