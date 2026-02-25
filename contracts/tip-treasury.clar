@@ -54,3 +54,32 @@
   )
 )
 
+;; Create spending proposal
+(define-public (create-spending-proposal (recipient principal) (amount uint) (description (string-ascii 256)))
+  (let
+    (
+      (proposal-id (var-get next-proposal-id))
+    )
+    (asserts! (<= amount (var-get treasury-balance)) ERR-INSUFFICIENT-BALANCE)
+    (asserts! (<= amount MAX-WITHDRAWAL) ERR-AMOUNT-TOO-LARGE)
+    (map-set spending-proposals
+      { proposal-id: proposal-id }
+      {
+        proposer: tx-sender,
+        recipient: recipient,
+        amount: amount,
+        description: description,
+        approvals: u1,
+        executed: false,
+        created-block: block-height
+      }
+    )
+    (map-set proposal-signers
+      { proposal-id: proposal-id, signer: tx-sender }
+      { approved: true }
+    )
+    (var-set next-proposal-id (+ proposal-id u1))
+    (ok proposal-id)
+  )
+)
+
