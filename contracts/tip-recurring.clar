@@ -99,3 +99,17 @@
   )
 )
 
+;; Cancel subscription and refund remaining epochs
+(define-public (cancel-subscription (tier-id uint))
+  (let
+    (
+      (sub (unwrap! (map-get? active-subscriptions { subscriber: tx-sender, tier-id: tier-id }) ERR-NOT-SUBSCRIBED))
+      (tier (unwrap! (map-get? subscription-tiers { tier-id: tier-id }) ERR-TIER-NOT-FOUND))
+      (refund-amount (* (get epochs-remaining sub) (get amount-per-epoch tier)))
+    )
+    (map-delete active-subscriptions { subscriber: tx-sender, tier-id: tier-id })
+    (var-set total-subscriptions (- (var-get total-subscriptions) u1))
+    (ok refund-amount)
+  )
+)
+
