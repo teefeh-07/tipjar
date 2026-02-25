@@ -58,3 +58,13 @@ npm run build
 npm run deploy
 ```
 
+## Smart Contracts
+
+| Contract | Description |
+|----------|-------------|
+| tipjar.clar | Core tipping logic |
+| tip-token.clar | SIP-010 loyalty token |
+| tip-registry.clar | Creator directory |
+| tip-rewards.clar | Streak and bonus system |
+| tip-governance.clar | Community voting |
+
