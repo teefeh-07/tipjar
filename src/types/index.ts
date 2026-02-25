@@ -40,3 +40,10 @@ export interface TransactionResult {
   blockHeight?: number;
 }
 
+export interface Notification {
+  type: 'success' | 'info' | 'error' | 'warning';
+  title: string;
+  message: string;
+  timestamp: number;
+}
+
