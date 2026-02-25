@@ -20,3 +20,9 @@
   (begin
     (asserts! (is-none (map-get? creators tx-sender)) ERR-ALREADY-REGISTERED)
     (asserts! (> (len name) u0) ERR-INVALID-NAME)
+    (map-set creators tx-sender { name: name, description: description, category: category, active: true })
+    (var-set creator-count (+ (var-get creator-count) u1))
+    (ok true)
+  )
+)
+
