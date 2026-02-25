@@ -35,3 +35,22 @@ async function deployContract(contractName, contractFile) {
   return result;
 }
 
+async function deployAll() {
+  console.log('Starting deployment pipeline...');
+  const results = [];
+
+  for (const contract of CONTRACTS) {
+    try {
+      const result = await deployContract(contract.name, contract.file);
+      results.push({ ...contract, txid: result.txid, status: 'success' });
+    } catch (err) {
+      console.error(`Failed to deploy ${contract.name}:`, err.message);
+      results.push({ ...contract, status: 'failed', error: err.message });
+    }
+  }
+
+  console.log('\nDeployment Summary:');
+  results.forEach(r => console.log(`  ${r.name}: ${r.status}${r.txid ? ' (' + r.txid + ')' : ''}`));
+}
+
+deployAll();
