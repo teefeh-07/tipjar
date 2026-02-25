@@ -28,3 +28,8 @@ export function isAuthenticated() {
   return userSession.isUserSignedIn();
 }
 
+export function getUserData() {
+  if (!isAuthenticated()) return null;
+  return userSession.loadUserData();
+}
+
