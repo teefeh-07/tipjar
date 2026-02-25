@@ -27,3 +27,7 @@ export function validateCreatorName(name) {
   return { valid: true, error: null };
 }
 
+export function sanitizeInput(input) {
+  if (typeof input !== 'string') return '';
+  return input.replace(/[<>"\\]/g, '').trim();
+}
