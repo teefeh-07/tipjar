@@ -38,3 +38,11 @@ export default function useTransaction() {
     }
   }, [txId]);
 
+  const reset = useCallback(() => {
+    setTxId(null);
+    setStatus(TX_STATES.IDLE);
+    setError(null);
+  }, []);
+
+  return { txId, status, error, submit, checkStatus, reset, TX_STATES };
+}
