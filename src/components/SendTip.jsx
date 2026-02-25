@@ -8,3 +8,11 @@ const AMOUNT_PRESETS = [
   { label: '5 STX', value: 5000000 },
 ];
 
+export default function SendTip() {
+  const [recipient, setRecipient] = useState('');
+  const [amount, setAmount] = useState('');
+  const [memo, setMemo] = useState('');
+  const [status, setStatus] = useState(null);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+
