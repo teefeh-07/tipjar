@@ -7,3 +7,16 @@ export default function useWallet() {
   const [address, setAddress] = useState(null);
   const [provider, setProvider] = useState(null);
 
+  useEffect(() => {
+    if (isAuthenticated()) {
+      setConnected(true);
+      setAddress(getStxAddress());
+      setProvider('hiro');
+    } else if (isConnected()) {
+      setConnected(true);
+      setProvider('walletconnect');
+      const session = getSession();
+      if (session) setAddress(session.namespaces?.stacks?.accounts?.[0]?.split(':')[2] || null);
+    }
+  }, []);
+
