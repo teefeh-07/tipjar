@@ -11,3 +11,13 @@ export interface Tip {
   status: 'pending' | 'confirmed' | 'failed';
 }
 
+export interface Creator {
+  address: string;
+  name: string;
+  description: string;
+  category: string;
+  active: boolean;
+  totalReceived: number;
+  tipCount: number;
+}
+
