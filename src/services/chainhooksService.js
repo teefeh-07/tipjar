@@ -42,3 +42,8 @@ export async function listWebhooks() {
   return chainhooksClient.listHooks();
 }
 
+export async function deleteWebhook(hookId) {
+  if (!chainhooksClient) throw new Error('Chainhooks not initialized');
+  return chainhooksClient.deleteHook(hookId);
+}
+
