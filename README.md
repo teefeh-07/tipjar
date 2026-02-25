@@ -42,3 +42,19 @@ Required variables:
 - `CHAINHOOKS_API_KEY` - Get from Hiro Platform
 - `STACKS_NETWORK` - mainnet, testnet, or devnet
 
+## Usage
+
+```bash
+# Start development server
+npm run dev
+
+# Run tests
+npm test
+
+# Build for production
+npm run build
+
+# Deploy contracts
+npm run deploy
+```
+
