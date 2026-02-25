@@ -66,3 +66,28 @@
   )
 )
 
+;; Record governance participation
+(define-public (record-governance-activity (user principal))
+  (let
+    (
+      (existing (default-to
+        { total-score: u0, tip-score: u0, consistency-score: u0, receiving-score: u0, governance-score: u0, badge-score: u0, last-activity-block: u0, last-updated-block: u0 }
+        (map-get? reputation-scores { user: user })
+      ))
+      (new-gov-score (+ (get governance-score existing) u10))
+      (capped-gov (if (> new-gov-score u50) u50 new-gov-score))
+      (new-total (+ (get tip-score existing) (get consistency-score existing) (get receiving-score existing) capped-gov (get badge-score existing)))
+    )
+    (map-set reputation-scores
+      { user: user }
+      (merge existing {
+        governance-score: capped-gov,
+        total-score: new-total,
+        last-activity-block: block-height,
+        last-updated-block: block-height
+      })
+    )
+    (ok new-total)
+  )
+)
+
