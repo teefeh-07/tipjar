@@ -66,3 +66,23 @@ export async function getTipAmount(sender, recipient) {
   return result;
 }
 
+export async function getPlatformStats() {
+  const totalTips = await callReadOnlyFunction({
+    network: DEFAULT_NETWORK,
+    contractAddress: CONTRACT_ADDRESS,
+    contractName: CONTRACT_NAME,
+    functionName: 'get-total-tips',
+    functionArgs: [],
+    senderAddress: CONTRACT_ADDRESS,
+  });
+  const tipCount = await callReadOnlyFunction({
+    network: DEFAULT_NETWORK,
+    contractAddress: CONTRACT_ADDRESS,
+    contractName: CONTRACT_NAME,
+    functionName: 'get-tip-count',
+    functionArgs: [],
+    senderAddress: CONTRACT_ADDRESS,
+  });
+  return { totalTips, tipCount };
+}
+
