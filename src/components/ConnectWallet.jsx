@@ -46,3 +46,12 @@ export default function ConnectWallet() {
     );
   }
 
+  return (
+    <div className="wallet-connect">
+      {error && <p className="error-text">{error}</p>}
+      <button onClick={handleHiroConnect} disabled={loading} className="btn-hiro">Connect Hiro Wallet</button>
+      <button onClick={handleWCConnect} disabled={loading} className="btn-wc">Connect via WalletConnect</button>
+      {loading && <span className="loading-indicator">Connecting...</span>}
+    </div>
+  );
+}
