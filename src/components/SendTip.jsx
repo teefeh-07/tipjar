@@ -35,3 +35,7 @@ export default function SendTip() {
     }
   };
 
+  const handlePreset = (value) => {
+    setAmount((value / 1000000).toString());
+  };
+
