@@ -16,3 +16,8 @@ export function validateTipAmount(amountMicro) {
   return { valid: true, error: null };
 }
 
+export function validateMemo(memo) {
+  if (memo && memo.length > 34) return { valid: false, error: 'Memo must be 34 characters or less' };
+  return { valid: true, error: null };
+}
+
