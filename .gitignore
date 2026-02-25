@@ -6,3 +6,5 @@ node_modules/
 # Build output
 /build
 /dist
+/out
+/.next/
