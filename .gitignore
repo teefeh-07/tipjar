@@ -1,0 +1,38 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Build output
+/build
+/dist
+/out
+/.next/
+
+# Environment
+.env
+.env.local
+.env.production
+
+# Clarity
+.cache/
+history.txt
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+*.log
+
+# Coverage
+coverage/
+*.lcov
+
+# Misc
+*.tgz
+.yarn-integrity
