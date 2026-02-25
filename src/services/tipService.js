@@ -14,3 +14,23 @@ export function validateTip(amount, recipient) {
   return { valid: true, error: null };
 }
 
+export async function processTip(recipient, amount, memo = '') {
+  const validation = validateTip(amount, recipient);
+  if (!validation.valid) throw new Error(validation.error);
+
+  const result = await stacksSendTip(recipient, amount.toString());
+
+  const tipRecord = {
+    id: Date.now().toString(36),
+    recipient,
+    amount,
+    memo,
+    timestamp: new Date().toISOString(),
+    txId: result?.txId || null,
+    status: 'pending',
+  };
+
+  tipHistory.push(tipRecord);
+  return tipRecord;
+}
+
