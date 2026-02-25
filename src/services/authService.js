@@ -39,3 +39,4 @@ export function getStxAddress() {
   return userData.profile?.stxAddress?.testnet || userData.profile?.stxAddress?.mainnet || null;
 }
 
+export { userSession };
