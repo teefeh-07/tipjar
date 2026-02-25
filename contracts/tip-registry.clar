@@ -14,3 +14,5 @@
   }
 )
 
+(define-data-var creator-count uint u0)
+
