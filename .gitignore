@@ -8,3 +8,8 @@ node_modules/
 /dist
 /out
 /.next/
+
+# Environment
+.env
+.env.local
+.env.production
