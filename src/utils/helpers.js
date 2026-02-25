@@ -26,3 +26,11 @@ export function formatDate(isoString) {
   });
 }
 
+export function debounce(fn, delayMs = 300) {
+  let timer;
+  return (...args) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => fn(...args), delayMs);
+  };
+}
+
