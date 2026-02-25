@@ -1,3 +1,6 @@
 [project]
 name = "tipjar"
 description = "Decentralized tipping platform on Stacks"
+authors = []
+telemetry = true
+cache_dir = "./.cache"
