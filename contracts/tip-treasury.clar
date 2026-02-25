@@ -44,3 +44,13 @@
   { approved: bool }
 )
 
+;; Receive platform fees
+(define-public (deposit-fee (amount uint))
+  (begin
+    (try! (stx-transfer? amount tx-sender (as-contract tx-sender)))
+    (var-set treasury-balance (+ (var-get treasury-balance) amount))
+    (var-set total-received (+ (var-get total-received) amount))
+    (ok true)
+  )
+)
+
