@@ -45,3 +45,33 @@
   { badge-id: uint, earned: bool }
 )
 
+;; Mint achievement badge (admin only)
+(define-public (mint-badge (recipient principal) (badge-type uint) (name (string-ascii 64)) (description (string-ascii 256)) (image-uri (string-ascii 256)))
+  (let
+    (
+      (badge-id (var-get next-badge-id))
+    )
+    (asserts! (is-eq tx-sender CONTRACT-OWNER) ERR-NOT-AUTHORIZED)
+    (asserts! (is-none (map-get? user-badges { user: recipient, badge-type: badge-type })) ERR-BADGE-EXISTS)
+    (try! (nft-mint? tipjar-badge badge-id recipient))
+    (map-set badge-metadata
+      { badge-id: badge-id }
+      {
+        badge-type: badge-type,
+        owner: recipient,
+        name: name,
+        description: description,
+        image-uri: image-uri,
+        earned-at-block: block-height
+      }
+    )
+    (map-set user-badges
+      { user: recipient, badge-type: badge-type }
+      { badge-id: badge-id, earned: true }
+    )
+    (var-set next-badge-id (+ badge-id u1))
+    (var-set total-badges-minted (+ (var-get total-badges-minted) u1))
+    (ok badge-id)
+  )
+)
+
