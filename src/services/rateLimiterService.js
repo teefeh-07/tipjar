@@ -17,3 +17,35 @@ const RATE_LIMITS = {
   default: { maxRequests: 30, windowMs: 60000, burstCapacity: 10 },
 };
 
+// Token bucket implementation
+class TokenBucket {
+  constructor(maxTokens, refillRate, refillInterval) {
+    this.maxTokens = maxTokens;
+    this.tokens = maxTokens;
+    this.refillRate = refillRate;
+    this.lastRefill = Date.now();
+    this.refillInterval = refillInterval;
+  }
+  
+  refill() {
+    const now = Date.now();
+    const elapsed = now - this.lastRefill;
+    const tokensToAdd = Math.floor(elapsed / this.refillInterval) * this.refillRate;
+    this.tokens = Math.min(this.maxTokens, this.tokens + tokensToAdd);
+    this.lastRefill = now;
+  }
+  
+  tryConsume(tokens = 1) {
+    this.refill();
+    if (this.tokens >= tokens) {
+      this.tokens -= tokens;
+      return true;
+    }
+    return false;
+  }
+  
+  getRetryAfter() {
+    return Math.ceil((1 - this.tokens) * this.refillInterval / this.refillRate);
+  }
+}
+
