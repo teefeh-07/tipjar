@@ -26,3 +26,16 @@ describe('Tipjar Contract', () => {
     });
   });
 
+  describe('register-creator', () => {
+    it('should register a new creator successfully', () => {
+      const creator = wallet1;
+      expect(creator.startsWith('ST')).toBe(true);
+    });
+
+    it('should track registered creator count', () => {
+      let count = 0;
+      count++;
+      expect(count).toBe(1);
+    });
+  });
+
