@@ -56,3 +56,17 @@ Returns `{ txId, status, error, submit, checkStatus, reset }`
 ### `useTipHistory(refreshInterval?)`
 Returns `{ history, loading, count }`
 
+## Utilities
+
+### helpers
+- `microToStx(microStx)` - Convert micro-STX to STX
+- `stxToMicro(stx)` - Convert STX to micro-STX
+- `truncateAddress(address)` - Truncate address for display
+- `formatStx(microStx)` - Format micro-STX as display string
+- `debounce(fn, delayMs)` - Debounce function calls
+
+### validation
+- `validateStxAddress(address)` - Validate a Stacks address
+- `validateTipAmount(amountMicro)` - Validate tip amount bounds
+- `validateMemo(memo)` - Validate memo length
+- `sanitizeInput(input)` - Strip dangerous characters
