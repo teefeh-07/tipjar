@@ -24,3 +24,20 @@ export async function initWalletConnect() {
   return signClient;
 }
 
+function setupEventListeners() {
+  signClient.on('session_event', ({ event }) => {
+    console.log('Session event:', event);
+  });
+
+  signClient.on('session_update', ({ topic, params }) => {
+    const { namespaces } = params;
+    const session = signClient.session.get(topic);
+    currentSession = { ...session, namespaces };
+  });
+
+  signClient.on('session_delete', () => {
+    console.log('Session deleted');
+    currentSession = null;
+  });
+}
+
