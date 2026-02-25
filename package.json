@@ -25,3 +25,10 @@
     "@walletconnect/utils": "^2.11.3",
     "@hirosystems/chainhooks-client": "^1.1.0"
   },
+  "devDependencies": {
+    "vite": "^5.0.0",
+    "@vitejs/plugin-react": "^4.2.0",
+    "vitest": "^1.0.0",
+    "eslint": "^8.50.0"
+  }
+}
