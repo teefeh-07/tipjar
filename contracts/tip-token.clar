@@ -31,3 +31,11 @@
   (ok (ft-get-supply tip-token))
 )
 
+(define-public (transfer (amount uint) (from principal) (to principal) (memo (optional (buff 34))))
+  (begin
+    (asserts! (is-eq from tx-sender) ERR-NOT-OWNER)
+    (try! (ft-transfer? tip-token amount from to))
+    (ok true)
+  )
+)
+
