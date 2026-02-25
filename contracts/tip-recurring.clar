@@ -49,3 +49,26 @@
   { total-earned: uint, active-subscribers: uint }
 )
 
+;; Create a new subscription tier
+(define-public (create-subscription-tier (name (string-ascii 64)) (amount uint) (perks (string-ascii 256)))
+  (let
+    (
+      (tier-id (var-get next-tier-id))
+    )
+    (asserts! (> amount u0) ERR-INSUFFICIENT-FUNDS)
+    (map-set subscription-tiers
+      { tier-id: tier-id }
+      {
+        creator: tx-sender,
+        name: name,
+        amount-per-epoch: amount,
+        perks: perks,
+        subscriber-count: u0,
+        active: true
+      }
+    )
+    (var-set next-tier-id (+ tier-id u1))
+    (ok tier-id)
+  )
+)
+
