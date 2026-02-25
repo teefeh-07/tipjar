@@ -72,3 +72,30 @@
   )
 )
 
+;; Subscribe to a creator tier
+(define-public (subscribe (tier-id uint) (num-epochs uint))
+  (let
+    (
+      (tier (unwrap! (map-get? subscription-tiers { tier-id: tier-id }) ERR-TIER-NOT-FOUND))
+      (total-cost (* (get amount-per-epoch tier) num-epochs))
+      (current-block block-height)
+    )
+    (asserts! (> num-epochs u0) ERR-INVALID-EPOCHS)
+    (asserts! (is-none (map-get? active-subscriptions { subscriber: tx-sender, tier-id: tier-id })) ERR-ALREADY-SUBSCRIBED)
+    (try! (stx-transfer? total-cost tx-sender (get creator tier)))
+    (map-set active-subscriptions
+      { subscriber: tx-sender, tier-id: tier-id }
+      {
+        start-block: current-block,
+        end-block: (+ current-block (* num-epochs u2100)),
+        epochs-remaining: num-epochs,
+        last-processed-block: current-block,
+        total-paid: total-cost
+      }
+    )
+    (var-set total-subscriptions (+ (var-get total-subscriptions) u1))
+    (var-set total-recurring-volume (+ (var-get total-recurring-volume) total-cost))
+    (ok true)
+  )
+)
+
