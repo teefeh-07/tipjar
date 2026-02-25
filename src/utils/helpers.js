@@ -15,3 +15,7 @@ export function truncateAddress(address, startChars = 6, endChars = 4) {
   return `${address.slice(0, startChars)}...${address.slice(-endChars)}`;
 }
 
+export function formatStx(microStx, decimals = 6) {
+  return microToStx(microStx).toFixed(decimals);
+}
+
