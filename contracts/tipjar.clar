@@ -1,3 +1,6 @@
 ;; Tipjar - Core tipping smart contract
 ;; Built with Clarity 4, epoch 3.3
 
+;; Error constants
+(define-constant ERR-INVALID-AMOUNT (err u100))
+(define-constant ERR-TRANSFER-FAILED (err u101))
