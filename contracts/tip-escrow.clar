@@ -18,3 +18,26 @@
 (define-constant ESCROW-MILESTONE u2)
 (define-constant ESCROW-APPROVAL u3)
 
+;; State variables
+(define-data-var next-escrow-id uint u1)
+(define-data-var total-escrowed uint u0)
+(define-data-var total-released uint u0)
+(define-data-var total-refunded uint u0)
+
+;; Escrow data structure
+(define-map escrows
+  { escrow-id: uint }
+  {
+    sender: principal,
+    recipient: principal,
+    amount: uint,
+    escrow-type: uint,
+    memo: (string-ascii 128),
+    created-block: uint,
+    timeout-block: uint,
+    claimed: bool,
+    refunded: bool,
+    condition-met: bool
+  }
+)
+
