@@ -38,3 +38,14 @@ export function getTipHistory() {
   return [...tipHistory].reverse();
 }
 
+export function getTipStats() {
+  const totalAmount = tipHistory.reduce((sum, tip) => sum + tip.amount, 0);
+  const uniqueRecipients = new Set(tipHistory.map(t => t.recipient)).size;
+  return {
+    totalTips: tipHistory.length,
+    totalAmount,
+    uniqueRecipients,
+    averageTip: tipHistory.length > 0 ? totalAmount / tipHistory.length : 0,
+  };
+}
+
