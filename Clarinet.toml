@@ -21,3 +21,7 @@ path = "contracts/tip-registry.clar"
 clarity_version = 4
 epoch = "3.3"
 
+[repl]
+clarity_wasm_mode = false
+show_timings = false
+
