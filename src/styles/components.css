@@ -15,3 +15,12 @@
 .nav-link { color: var(--color-text-muted); font-size: var(--text-sm); }
 .nav-link:hover { color: var(--color-primary-light); }
 
+.app-footer {
+  padding: var(--space-8);
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-surface-alt);
+  text-align: center;
+}
+.footer-links { display: flex; justify-content: center; gap: var(--space-6); margin-bottom: var(--space-4); }
+.footer-info p { color: var(--color-text-muted); font-size: var(--text-sm); }
+
