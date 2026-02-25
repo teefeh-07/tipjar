@@ -55,3 +55,6 @@
   (ok (var-get total-tip-count))
 )
 
+(define-read-only (is-registered (creator principal))
+  (default-to false (map-get? registered-creators creator))
+)
