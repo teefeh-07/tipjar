@@ -74,3 +74,61 @@ export function handleError(error, context = '') {
   return { category, userMessage, originalError: error };
 }
 
+// Circuit breaker implementation
+const circuitBreakers = new Map();
+
+export function createCircuitBreaker(name, options = {}) {
+  const {
+    failureThreshold = 5,
+    resetTimeout = 60000,
+    halfOpenRequests = 1,
+  } = options;
+  
+  const breaker = {
+    name,
+    state: 'closed', // closed, open, half-open
+    failures: 0,
+    lastFailure: null,
+    failureThreshold,
+    resetTimeout,
+    halfOpenRequests,
+    successCount: 0,
+  };
+  
+  circuitBreakers.set(name, breaker);
+  return breaker;
+}
+
+export function isCircuitOpen(name) {
+  const breaker = circuitBreakers.get(name);
+  if (!breaker) return false;
+  
+  if (breaker.state === 'open') {
+    if (Date.now() - breaker.lastFailure > breaker.resetTimeout) {
+      breaker.state = 'half-open';
+      return false;
+    }
+    return true;
+  }
+  return false;
+}
+
+export function recordSuccess(name) {
+  const breaker = circuitBreakers.get(name);
+  if (breaker) {
+    breaker.failures = 0;
+    breaker.state = 'closed';
+  }
+}
+
+export function recordFailure(name) {
+  const breaker = circuitBreakers.get(name);
+  if (breaker) {
+    breaker.failures++;
+    breaker.lastFailure = Date.now();
+    if (breaker.failures >= breaker.failureThreshold) {
+      breaker.state = 'open';
+    }
+  }
+}
+
