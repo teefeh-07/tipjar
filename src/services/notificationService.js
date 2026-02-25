@@ -27,3 +27,7 @@ export function tipReceived(sender, amount) {
   notify({ type: 'info', title: 'Tip Received!', message: `${sender.slice(0, 8)}... sent you ${amount / 1000000} STX`, timestamp: Date.now() });
 }
 
+export function transactionConfirmed(txId) {
+  notify({ type: 'success', title: 'Transaction Confirmed', message: `TX ${txId.slice(0, 10)}... confirmed on-chain`, timestamp: Date.now() });
+}
+
