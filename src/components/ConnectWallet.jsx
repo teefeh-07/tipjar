@@ -32,3 +32,8 @@ export default function ConnectWallet() {
     }
   };
 
+  const handleDisconnect = () => {
+    if (isAuthenticated()) logout();
+    if (isConnected()) disconnectWallet();
+  };
+
