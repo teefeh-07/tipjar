@@ -20,3 +20,5 @@ export default function Dashboard() {
     loadStats();
   }, []);
 
+  if (loading) return <div className="dashboard-loading">Loading dashboard...</div>;
+
