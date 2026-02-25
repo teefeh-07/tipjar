@@ -35,3 +35,6 @@ export function errorOccurred(message) {
   notify({ type: 'error', title: 'Error', message, timestamp: Date.now() });
 }
 
+export function getNotificationHistory() {
+  return [...notificationQueue];
+}
