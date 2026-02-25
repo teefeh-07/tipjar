@@ -28,3 +28,9 @@ export interface TipStats {
   averageTip: number;
 }
 
+export interface WalletState {
+  connected: boolean;
+  address: string | null;
+  provider: 'hiro' | 'walletconnect' | null;
+}
+
