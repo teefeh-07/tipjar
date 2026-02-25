@@ -68,3 +68,10 @@ npm run deploy
 | tip-rewards.clar | Streak and bonus system |
 | tip-governance.clar | Community voting |
 
+## Contributing
+
+Contributions are welcome! Please read CONTRIBUTING.md for guidelines.
+
+## License
+
+MIT License - see LICENSE for details.
