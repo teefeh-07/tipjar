@@ -36,3 +36,11 @@ npm run build
 
 Recommended hosts: Vercel, Netlify, or Cloudflare Pages.
 
+## Post-Deployment Checklist
+
+- [ ] Verify contracts on Stacks Explorer
+- [ ] Test send-tip on deployed contract
+- [ ] Confirm Chainhooks webhooks are receiving events
+- [ ] Verify WalletConnect sessions work in production
+- [ ] Check all environment variables are set
+- [ ] Monitor first few transactions for errors
