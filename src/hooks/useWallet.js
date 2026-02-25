@@ -30,3 +30,11 @@ export default function useWallet() {
     }
   }, []);
 
+  const disconnect = useCallback(() => {
+    if (provider === 'hiro') logout();
+    else disconnectWallet();
+    setConnected(false);
+    setAddress(null);
+    setProvider(null);
+  }, [provider]);
+
