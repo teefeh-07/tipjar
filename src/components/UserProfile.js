@@ -100,3 +100,43 @@ function ActivityTimeline({ activities }) {
   );
 }
 
+// Main UserProfile component
+export default function UserProfile() {
+  const { connected, address, provider } = useWallet();
+  const [reputation, setReputation] = useState({ totalScore: 0, tier: 'newcomer', tipScore: 0, consistencyScore: 0, receivingScore: 0, governanceScore: 0, badgeScore: 0 });
+  const [badges, setBadges] = useState([]);
+  const [activities, setActivities] = useState([]);
+  
+  const tierStyle = TIER_STYLES[reputation.tier] || TIER_STYLES.newcomer;
+  
+  if (!connected) {
+    return React.createElement('div', { className: 'profile-connect-prompt' },
+      React.createElement('h2', null, 'Connect your wallet to view your profile'),
+      React.createElement('p', null, 'Your reputation, badges, and activity will appear here.')
+    );
+  }
+  
+  return React.createElement('div', { className: 'user-profile' },
+    // Profile Header
+    React.createElement('div', { className: 'profile-header' },
+      React.createElement('div', {
+        className: 'profile-avatar',
+        style: { background: getAvatarGradient(address) }
+      }, address ? address.slice(0, 2) : '?'),
+      React.createElement('div', { className: 'profile-info' },
+        React.createElement('h2', { className: 'profile-address' }, truncateAddress(address)),
+        React.createElement('div', {
+          className: 'profile-tier',
+          style: { color: tierStyle.color }
+        }, `${tierStyle.icon} ${tierStyle.label} · Score: ${reputation.totalScore}`),
+        React.createElement('div', { className: 'profile-provider' }, `Connected via ${provider || 'wallet'}`)
+      )
+    ),
+    // Reputation breakdown
+    React.createElement(ReputationBreakdown, { scores: reputation }),
+    // Badge collection
+    React.createElement(BadgeCollection, { badges }),
+    // Activity timeline
+    React.createElement(ActivityTimeline, { activities })
+  );
+}
