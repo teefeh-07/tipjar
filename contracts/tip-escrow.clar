@@ -87,3 +87,21 @@
   )
 )
 
+;; Claim escrowed funds (recipient only)
+(define-public (claim-escrow (escrow-id uint))
+  (let
+    (
+      (escrow (unwrap! (map-get? escrows { escrow-id: escrow-id }) ERR-ESCROW-NOT-FOUND))
+    )
+    (asserts! (is-eq (get recipient escrow) tx-sender) ERR-NOT-AUTHORIZED)
+    (asserts! (not (get claimed escrow)) ERR-ALREADY-CLAIMED)
+    (asserts! (get condition-met escrow) ERR-CONDITIONS-NOT-MET)
+    (map-set escrows
+      { escrow-id: escrow-id }
+      (merge escrow { claimed: true })
+    )
+    (var-set total-released (+ (var-get total-released) (get amount escrow)))
+    (ok (get amount escrow))
+  )
+)
+
