@@ -81,3 +81,19 @@ function SelectSetting({ id, label, value, options, onChange }) {
   );
 }
 
+// Settings section component
+function SettingsSection({ title, icon, children }) {
+  const [expanded, setExpanded] = useState(true);
+  
+  return React.createElement('div', { className: 'settings-section' },
+    React.createElement('button', {
+      className: 'section-header',
+      onClick: () => setExpanded(!expanded)
+    },
+      React.createElement('span', null, `${icon} ${title}`),
+      React.createElement('span', { className: 'section-chevron' }, expanded ? '▼' : '▶')
+    ),
+    expanded && React.createElement('div', { className: 'section-content' }, children)
+  );
+}
+
