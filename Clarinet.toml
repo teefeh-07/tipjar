@@ -6,3 +6,8 @@ telemetry = true
 cache_dir = "./.cache"
 requirements = []
 
+[contracts.tipjar]
+path = "contracts/tipjar.clar"
+clarity_version = 4
+epoch = "3.3"
+
