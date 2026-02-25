@@ -39,3 +39,9 @@
   )
 )
 
+(define-public (mint (amount uint) (recipient principal))
+  (begin
+    (asserts! (is-eq tx-sender CONTRACT-OWNER) ERR-NOT-OWNER)
+    (ft-mint? tip-token amount recipient)
+  )
+)
