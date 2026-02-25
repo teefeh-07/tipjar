@@ -22,3 +22,16 @@ export default function App() {
     bootstrap();
   }, []);
 
+  return (
+    <div className="app">
+      <Header />
+      <main className="app-main">
+        <Dashboard />
+        <SendTip />
+        <TipHistory />
+        <Leaderboard />
+      </main>
+      <Footer />
+    </div>
+  );
+}
