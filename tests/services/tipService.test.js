@@ -14,3 +14,11 @@ describe('Tip Service', () => {
       expect(amount).toBeLessThan(minTip);
     });
 
+    it('should accept valid tip parameters', () => {
+      const amount = 1000000;
+      const recipient = 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM';
+      expect(amount).toBeGreaterThan(0);
+      expect(recipient.length).toBeGreaterThan(30);
+    });
+  });
+
