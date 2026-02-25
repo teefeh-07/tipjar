@@ -31,3 +31,15 @@
   }
 )
 
+;; Active subscription data structure
+(define-map active-subscriptions
+  { subscriber: principal, tier-id: uint }
+  {
+    start-block: uint,
+    end-block: uint,
+    epochs-remaining: uint,
+    last-processed-block: uint,
+    total-paid: uint
+  }
+)
+
