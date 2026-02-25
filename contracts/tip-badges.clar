@@ -75,3 +75,22 @@
   )
 )
 
+;; Read-only: check if user has specific badge
+(define-read-only (has-badge (user principal) (badge-type uint))
+  (is-some (map-get? user-badges { user: user, badge-type: badge-type }))
+)
+
+;; Read-only: get badge metadata
+(define-read-only (get-badge-info (badge-id uint))
+  (map-get? badge-metadata { badge-id: badge-id })
+)
+
+;; Read-only: get total badges minted
+(define-read-only (get-total-badges)
+  (var-get total-badges-minted)
+)
+
+;; Read-only: get badge URI for display
+(define-read-only (get-token-uri (badge-id uint))
+  (ok (get image-uri (unwrap! (map-get? badge-metadata { badge-id: badge-id }) ERR-BADGE-NOT-FOUND)))
+)
