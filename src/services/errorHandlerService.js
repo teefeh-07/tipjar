@@ -23,3 +23,30 @@ const ERROR_MESSAGES = {
   [ERROR_CATEGORIES.UNKNOWN]: 'Something went wrong. Please try again later.',
 };
 
+// Error log storage
+const errorLog = [];
+const MAX_ERROR_LOG = 200;
+
+// Classify error by examining message and properties
+export function classifyError(error) {
+  const message = (error.message || '').toLowerCase();
+  
+  if (message.includes('fetch') || message.includes('network') || message.includes('timeout')) {
+    return ERROR_CATEGORIES.NETWORK;
+  }
+  if (message.includes('broadcast') || message.includes('transaction') || message.includes('contract')) {
+    return ERROR_CATEGORIES.BLOCKCHAIN;
+  }
+  if (message.includes('invalid') || message.includes('required') || message.includes('validation')) {
+    return ERROR_CATEGORIES.VALIDATION;
+  }
+  if (message.includes('auth') || message.includes('wallet') || message.includes('connect')) {
+    return ERROR_CATEGORIES.AUTHENTICATION;
+  }
+  if (message.includes('rate') || message.includes('limit') || message.includes('throttle')) {
+    return ERROR_CATEGORIES.RATE_LIMIT;
+  }
+  
+  return ERROR_CATEGORIES.UNKNOWN;
+}
+
