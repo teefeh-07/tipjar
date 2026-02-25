@@ -41,3 +41,17 @@ function setupEventListeners() {
   });
 }
 
+export async function connectWallet() {
+  const { uri, approval } = await signClient.connect({
+    requiredNamespaces: WC_REQUIRED_NAMESPACES,
+  });
+
+  if (uri) {
+    walletConnectModal.openModal({ uri });
+  }
+
+  currentSession = await approval();
+  walletConnectModal.closeModal();
+  return currentSession;
+}
+
