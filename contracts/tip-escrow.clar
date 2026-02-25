@@ -123,3 +123,16 @@
   )
 )
 
+;; Read-only functions
+(define-read-only (get-escrow (escrow-id uint))
+  (map-get? escrows { escrow-id: escrow-id })
+)
+
+(define-read-only (get-escrow-stats)
+  {
+    total-escrowed: (var-get total-escrowed),
+    total-released: (var-get total-released),
+    total-refunded: (var-get total-refunded),
+    active-escrows: (- (var-get next-escrow-id) u1)
+  }
+)
