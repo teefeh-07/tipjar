@@ -32,3 +32,11 @@ Example: `feat: add tip amount validation to SendTip form`
 - `test/description` - Test additions
 - `setup/description` - Configuration
 
+## Pull Requests
+
+- Keep PRs focused and small
+- Include a clear description of changes
+- Reference any related issues
+- Ensure all tests pass
+- Request review from at least one maintainer
+
