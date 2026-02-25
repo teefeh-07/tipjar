@@ -27,3 +27,13 @@ tipjar/
 └── settings/           # Clarinet network settings
 ```
 
+## Data Flow
+
+1. User interacts with a Component (e.g., SendTip)
+2. Component calls a Hook (e.g., useTransaction)
+3. Hook delegates to a Service (e.g., stacksService)
+4. Service builds and broadcasts a Stacks transaction
+5. Smart contract processes the transaction on-chain
+6. Chainhooks detects transaction and triggers webhook
+7. Notification service updates the UI in real-time
+
