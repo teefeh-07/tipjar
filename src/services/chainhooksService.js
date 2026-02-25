@@ -37,3 +37,8 @@ export async function registerTransferWebhook() {
   return webhook;
 }
 
+export async function listWebhooks() {
+  if (!chainhooksClient) throw new Error('Chainhooks not initialized');
+  return chainhooksClient.listHooks();
+}
+
