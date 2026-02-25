@@ -47,3 +47,37 @@ function saveSettings(settings) {
   }
 }
 
+// Toggle switch component
+function ToggleSwitch({ id, label, checked, onChange, description }) {
+  return React.createElement('div', { className: 'setting-toggle' },
+    React.createElement('div', { className: 'setting-toggle-info' },
+      React.createElement('label', { htmlFor: id }, label),
+      description && React.createElement('p', { className: 'setting-description' }, description)
+    ),
+    React.createElement('button', {
+      id,
+      role: 'switch',
+      'aria-checked': checked,
+      className: `toggle-switch ${checked ? 'active' : ''}`,
+      onClick: () => onChange(!checked)
+    },
+      React.createElement('span', { className: 'toggle-thumb' })
+    )
+  );
+}
+
+// Select dropdown component
+function SelectSetting({ id, label, value, options, onChange }) {
+  return React.createElement('div', { className: 'setting-select' },
+    React.createElement('label', { htmlFor: id }, label),
+    React.createElement('select', {
+      id, value,
+      onChange: (e) => onChange(e.target.value)
+    },
+      options.map(opt =>
+        React.createElement('option', { key: opt.value, value: opt.value }, opt.label)
+      )
+    )
+  );
+}
+
