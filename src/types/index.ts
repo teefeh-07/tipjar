@@ -21,3 +21,10 @@ export interface Creator {
   tipCount: number;
 }
 
+export interface TipStats {
+  totalTips: number;
+  totalAmount: number;
+  uniqueRecipients: number;
+  averageTip: number;
+}
+
