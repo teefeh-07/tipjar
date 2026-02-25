@@ -10,3 +10,5 @@
   { current-streak: uint, longest-streak: uint, last-tip-block: uint }
 )
 
+(define-map reward-claims principal { total-claimed: uint, last-claim-block: uint })
+
