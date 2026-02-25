@@ -28,3 +28,11 @@
     (asserts! (is-none (map-get? votes { proposal-id: proposal-id, voter: tx-sender })) ERR-ALREADY-VOTED)
     (asserts! (<= (- stacks-block-height (get start-block proposal)) VOTING-PERIOD) ERR-VOTING-CLOSED)
     (map-set votes { proposal-id: proposal-id, voter: tx-sender } { vote: vote-for })
+    (if vote-for
+      (map-set proposals proposal-id (merge proposal { votes-for: (+ (get votes-for proposal) u1) }))
+      (map-set proposals proposal-id (merge proposal { votes-against: (+ (get votes-against proposal) u1) }))
+    )
+    (ok true)
+  )
+)
+
