@@ -8,3 +8,11 @@ const WEBHOOK_URL = process.env.CHAINHOOKS_WEBHOOK_URL || 'http://localhost:3001
 
 let chainhooksClient = null;
 
+export async function initChainhooks() {
+  chainhooksClient = new Chainhook({
+    apiKey: CHAINHOOKS_API_KEY,
+  });
+  console.log('Chainhooks client initialized');
+  return chainhooksClient;
+}
+
