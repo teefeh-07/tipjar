@@ -15,3 +15,5 @@ export default function useTipHistory(refreshInterval = 10000) {
     return () => clearInterval(interval);
   }, [refreshInterval]);
 
+  return { history, loading, count: history.length };
+}
