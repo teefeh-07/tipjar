@@ -33,3 +33,9 @@ export function getUserData() {
   return userSession.loadUserData();
 }
 
+export function getStxAddress() {
+  const userData = getUserData();
+  if (!userData) return null;
+  return userData.profile?.stxAddress?.testnet || userData.profile?.stxAddress?.mainnet || null;
+}
+
