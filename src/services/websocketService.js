@@ -53,3 +53,36 @@ export function connect(userAddress = null) {
   };
 }
 
+// Handle incoming messages
+function handleMessage(rawData) {
+  try {
+    const message = JSON.parse(rawData);
+    
+    if (message.type === 'pong') return; // Heartbeat response
+    
+    // Route to channel subscribers
+    if (message.channel && subscriptions.has(message.channel)) {
+      const handlers = subscriptions.get(message.channel);
+      handlers.forEach(handler => handler(message.data));
+    }
+    
+    // Emit to general listeners
+    emit(message.type || 'message', message.data);
+  } catch (err) {
+    console.warn('Failed to parse WebSocket message:', err);
+  }
+}
+
+// Send message (or queue if disconnected)
+export function send(type, data = {}, channel = null) {
+  const message = JSON.stringify({ type, data, channel, timestamp: Date.now() });
+  
+  if (isConnected && ws.readyState === WebSocket.OPEN) {
+    ws.send(message);
+  } else {
+    if (messageQueue.length < MAX_QUEUE_SIZE) {
+      messageQueue.push(message);
+    }
+  }
+}
+
