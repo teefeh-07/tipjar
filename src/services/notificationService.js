@@ -23,3 +23,7 @@ export function tipSent(recipient, amount) {
   notify({ type: 'success', title: 'Tip Sent!', message: `You sent ${amount / 1000000} STX to ${recipient.slice(0, 8)}...`, timestamp: Date.now() });
 }
 
+export function tipReceived(sender, amount) {
+  notify({ type: 'info', title: 'Tip Received!', message: `${sender.slice(0, 8)}... sent you ${amount / 1000000} STX`, timestamp: Date.now() });
+}
+
