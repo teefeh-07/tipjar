@@ -39,3 +39,13 @@ export function generateTipReceipt(tipData) {
   };
 }
 
+// Generate share text for a tip
+export function generateTipShareText(receipt, platform = 'twitter') {
+  const texts = {
+    twitter: `🎉 Just tipped ${receipt.recipient} ${receipt.amount} STX on ${APP_NAME}!\n\nSupporting creators on the Stacks blockchain 🧡\n\n${receipt.receiptUrl}`,
+    farcaster: `Tipped ${receipt.recipient} ${receipt.amount} STX on ${APP_NAME} 🎉\n\n${receipt.receiptUrl}`,
+    discord: `**🎉 Tip Sent via ${APP_NAME}**\n> **To:** ${receipt.recipient}\n> **Amount:** ${receipt.amount} STX\n> **Memo:** ${receipt.memo}\n> **TX:** ${receipt.receiptUrl}`,
+  };
+  return texts[platform] || texts.twitter;
+}
+
