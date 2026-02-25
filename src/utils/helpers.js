@@ -19,3 +19,10 @@ export function formatStx(microStx, decimals = 6) {
   return microToStx(microStx).toFixed(decimals);
 }
 
+export function formatDate(isoString) {
+  return new Date(isoString).toLocaleDateString('en-US', {
+    year: 'numeric', month: 'short', day: 'numeric',
+    hour: '2-digit', minute: '2-digit',
+  });
+}
+
