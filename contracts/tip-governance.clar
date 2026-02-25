@@ -15,3 +15,11 @@
 
 (define-map votes { proposal-id: uint, voter: principal } { vote: bool })
 
+(define-public (create-proposal (title (string-utf8 128)))
+  (let ((id (var-get proposal-nonce)))
+    (map-set proposals id { title: title, proposer: tx-sender, votes-for: u0, votes-against: u0, start-block: stacks-block-height, executed: false })
+    (var-set proposal-nonce (+ id u1))
+    (ok id)
+  )
+)
+
