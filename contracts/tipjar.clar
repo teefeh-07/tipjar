@@ -22,3 +22,11 @@
   (begin
     (asserts! (> amount u0) ERR-INVALID-AMOUNT)
     (try! (stx-transfer? amount tx-sender recipient))
+    (map-set tips { sender: tx-sender, recipient: recipient }
+      { amount: amount, timestamp: stacks-block-height })
+    (var-set total-tips-sent (+ (var-get total-tips-sent) amount))
+    (var-set total-tip-count (+ (var-get total-tip-count) u1))
+    (ok amount)
+  )
+)
+
