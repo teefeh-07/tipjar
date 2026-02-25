@@ -71,3 +71,29 @@ export function endSession() {
   sessionStartTime = null;
 }
 
+// Track an analytics event
+export function trackEvent(eventType, data = {}) {
+  const event = {
+    type: eventType,
+    sessionId,
+    timestamp: Date.now(),
+    data,
+  };
+  eventQueue.push(event);
+  
+  // Auto-flush when batch size reached
+  if (eventQueue.length >= BATCH_SIZE) {
+    flushEvents();
+  }
+}
+
+// Track page view
+export function trackPageView(pageName) {
+  trackEvent(ANALYTICS_EVENTS.PAGE_VIEWED, { page: pageName });
+}
+
+// Track feature usage
+export function trackFeatureUsage(featureName, metadata = {}) {
+  trackEvent(ANALYTICS_EVENTS.FEATURE_USED, { feature: featureName, ...metadata });
+}
+
