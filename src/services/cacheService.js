@@ -95,3 +95,45 @@ export async function cachedFetch(key, fetchFn, options = {}) {
   return value;
 }
 
+// Invalidate cache entries by pattern
+export function invalidatePattern(pattern) {
+  const regex = new RegExp(pattern);
+  let invalidated = 0;
+  
+  for (const key of cache.keys()) {
+    if (regex.test(key)) {
+      cache.delete(key);
+      const idx = accessOrder.indexOf(key);
+      if (idx > -1) accessOrder.splice(idx, 1);
+      invalidated++;
+    }
+  }
+  
+  return invalidated;
+}
+
+// Clear all cache
+export function clearCache() {
+  cache.clear();
+  accessOrder.length = 0;
+}
+
+// Get cache statistics
+export function getCacheStats() {
+  let totalHits = 0;
+  let expired = 0;
+  
+  for (const entry of cache.values()) {
+    totalHits += entry.hitCount;
+    if (isExpired(entry)) expired++;
+  }
+  
+  return {
+    entries: cache.size,
+    maxEntries: MAX_ENTRIES,
+    totalHits,
+    expiredEntries: expired,
+    memoryEstimate: `${(cache.size * 0.5).toFixed(1)}KB`,
+  };
+}
+
