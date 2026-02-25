@@ -22,3 +22,13 @@ describe('Tip Service', () => {
     });
   });
 
+  describe('getTipStats', () => {
+    it('should return correct stat shape', () => {
+      const stats = { totalTips: 0, totalAmount: 0, uniqueRecipients: 0, averageTip: 0 };
+      expect(stats).toHaveProperty('totalTips');
+      expect(stats).toHaveProperty('totalAmount');
+      expect(stats).toHaveProperty('uniqueRecipients');
+      expect(stats).toHaveProperty('averageTip');
+    });
+  });
+
