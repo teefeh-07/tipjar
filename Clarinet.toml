@@ -11,3 +11,8 @@ path = "contracts/tipjar.clar"
 clarity_version = 4
 epoch = "3.3"
 
+[contracts.tip-token]
+path = "contracts/tip-token.clar"
+clarity_version = 4
+epoch = "3.3"
+
