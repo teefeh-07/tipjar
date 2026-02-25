@@ -27,3 +27,12 @@ clarinet deployments generate --mainnet
 clarinet deployments apply --mainnet
 ```
 
+## Frontend Deployment
+
+```bash
+npm run build
+# Deploy the /dist folder to your hosting provider
+```
+
+Recommended hosts: Vercel, Netlify, or Cloudflare Pages.
+
