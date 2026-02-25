@@ -26,3 +26,11 @@
   )
 )
 
+(define-public (update-profile (name (string-utf8 64)) (description (string-utf8 256)) (category (string-utf8 32)))
+  (begin
+    (asserts! (is-some (map-get? creators tx-sender)) ERR-NOT-REGISTERED)
+    (map-set creators tx-sender { name: name, description: description, category: category, active: true })
+    (ok true)
+  )
+)
+
