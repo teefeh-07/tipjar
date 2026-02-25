@@ -12,3 +12,13 @@
 
 (define-map reward-claims principal { total-claimed: uint, last-claim-block: uint })
 
+(define-public (record-tip)
+  (let ((existing (default-to { current-streak: u0, longest-streak: u0, last-tip-block: u0 } (map-get? user-streaks tx-sender))))
+    (map-set user-streaks tx-sender
+      { current-streak: (+ (get current-streak existing) u1),
+        longest-streak: (if (> (+ (get current-streak existing) u1) (get longest-streak existing)) (+ (get current-streak existing) u1) (get longest-streak existing)),
+        last-tip-block: stacks-block-height })
+    (ok true)
+  )
+)
+
