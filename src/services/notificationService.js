@@ -31,3 +31,7 @@ export function transactionConfirmed(txId) {
   notify({ type: 'success', title: 'Transaction Confirmed', message: `TX ${txId.slice(0, 10)}... confirmed on-chain`, timestamp: Date.now() });
 }
 
+export function errorOccurred(message) {
+  notify({ type: 'error', title: 'Error', message, timestamp: Date.now() });
+}
+
