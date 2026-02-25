@@ -17,3 +17,10 @@ export const NETWORKS = {
   DEVNET: 'devnet',
 };
 
+export const TX_STATUS = {
+  PENDING: 'pending',
+  SUCCESS: 'success',
+  FAILED: 'failed',
+  DROPPED: 'dropped',
+};
+
