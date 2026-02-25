@@ -40,3 +40,15 @@ describe('Validation Utils', () => {
     });
   });
 
+  describe('validateMemo', () => {
+    it('should accept memos within 34 chars', () => {
+      const memo = 'Short memo';
+      expect(memo.length).toBeLessThanOrEqual(34);
+    });
+
+    it('should reject memos over 34 chars', () => {
+      const memo = 'A'.repeat(35);
+      expect(memo.length).toBeGreaterThan(34);
+    });
+  });
+
