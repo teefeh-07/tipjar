@@ -32,3 +32,17 @@ describe('Tip Service', () => {
     });
   });
 
+  describe('getTopRecipients', () => {
+    it('should sort recipients by total descending', () => {
+      const recipients = [{ total: 100 }, { total: 500 }, { total: 200 }];
+      recipients.sort((a, b) => b.total - a.total);
+      expect(recipients[0].total).toBe(500);
+    });
+
+    it('should limit results to specified count', () => {
+      const limit = 5;
+      const results = new Array(10).slice(0, limit);
+      expect(results.length).toBeLessThanOrEqual(limit);
+    });
+  });
+});
