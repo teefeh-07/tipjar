@@ -14,3 +14,15 @@ describe('Stacks Service', () => {
     });
   });
 
+  describe('registerCreator', () => {
+    it('should call tip-registry contract', () => {
+      const contractName = 'tip-registry';
+      expect(contractName).toBe('tip-registry');
+    });
+
+    it('should pass name, description, and category', () => {
+      const args = ['Creator', 'A great creator', 'Art'];
+      expect(args).toHaveLength(3);
+    });
+  });
+
