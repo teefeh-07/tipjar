@@ -49,3 +49,37 @@ class TokenBucket {
   }
 }
 
+// Sliding window counter
+class SlidingWindowCounter {
+  constructor(maxRequests, windowMs) {
+    this.maxRequests = maxRequests;
+    this.windowMs = windowMs;
+    this.requests = [];
+  }
+  
+  cleanup() {
+    const cutoff = Date.now() - this.windowMs;
+    this.requests = this.requests.filter(t => t > cutoff);
+  }
+  
+  tryRequest() {
+    this.cleanup();
+    if (this.requests.length >= this.maxRequests) {
+      return false;
+    }
+    this.requests.push(Date.now());
+    return true;
+  }
+  
+  remaining() {
+    this.cleanup();
+    return Math.max(0, this.maxRequests - this.requests.length);
+  }
+  
+  retryAfter() {
+    this.cleanup();
+    if (this.requests.length === 0) return 0;
+    return Math.max(0, this.requests[0] + this.windowMs - Date.now());
+  }
+}
+
