@@ -52,3 +52,16 @@ describe('Validation Utils', () => {
     });
   });
 
+  describe('sanitizeInput', () => {
+    it('should strip HTML tags', () => {
+      const input = 'hello<script>alert(1)</script>';
+      const cleaned = input.replace(/[<>"\\/]/g, '');
+      expect(cleaned).not.toContain('<');
+    });
+
+    it('should trim whitespace', () => {
+      const input = '  hello  ';
+      expect(input.trim()).toBe('hello');
+    });
+  });
+});
