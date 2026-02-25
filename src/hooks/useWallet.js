@@ -20,3 +20,13 @@ export default function useWallet() {
     }
   }, []);
 
+  const connect = useCallback(async (method = 'hiro') => {
+    if (method === 'hiro') {
+      authenticate();
+    } else {
+      await connectWallet();
+      setConnected(true);
+      setProvider('walletconnect');
+    }
+  }, []);
+
