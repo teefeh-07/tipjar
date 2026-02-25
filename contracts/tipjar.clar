@@ -12,3 +12,5 @@
 (define-data-var total-tips-sent uint u0)
 (define-data-var total-tip-count uint u0)
 
+;; Maps
+(define-map tips { sender: principal, recipient: principal } { amount: uint, timestamp: uint })
