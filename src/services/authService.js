@@ -24,3 +24,7 @@ export function logout() {
   userSession.signUserOut(window.location.origin);
 }
 
+export function isAuthenticated() {
+  return userSession.isUserSignedIn();
+}
+
