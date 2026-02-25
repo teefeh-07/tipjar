@@ -32,3 +32,8 @@
   { last-action-block: uint, actions-this-block: uint }
 )
 
+;; Data variables for global tracking
+(define-data-var total-scored-users uint u0)
+(define-data-var highest-score uint u0)
+(define-data-var max-actions-per-block uint u5)
+
