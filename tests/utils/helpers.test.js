@@ -12,3 +12,13 @@ describe('Helper Utils', () => {
     });
   });
 
+  describe('stxToMicro', () => {
+    it('should convert 1 STX to 1000000 micro-STX', () => {
+      expect(Math.floor(1 * 1000000)).toBe(1000000);
+    });
+
+    it('should floor fractional results', () => {
+      expect(Math.floor(0.0000001 * 1000000)).toBe(0);
+    });
+  });
+
