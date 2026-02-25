@@ -16,3 +16,14 @@ export default function TipHistory() {
           <li key={tip.id} className="tip-item">
             <div className="tip-recipient">To: {tip.recipient.slice(0, 8)}...{tip.recipient.slice(-4)}</div>
             <div className="tip-amount">{(tip.amount / 1000000).toFixed(6)} STX</div>
+            {tip.memo && <div className="tip-memo">&quot;{tip.memo}&quot;</div>}
+            <div className="tip-meta">
+              <span className="tip-time">{new Date(tip.timestamp).toLocaleString()}</span>
+              <span className={`tip-status tip-status--${tip.status}`}>{tip.status}</span>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
