@@ -13,3 +13,4 @@ export function getNetwork(env = 'testnet') {
 
 export const DEFAULT_NETWORK = getNetwork(process.env.STACKS_NETWORK || 'testnet');
 
+export const API_URL = process.env.STACKS_API_URL || 'https://api.testnet.hiro.so';
