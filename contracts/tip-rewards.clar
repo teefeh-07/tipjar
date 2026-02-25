@@ -6,3 +6,7 @@
 (define-constant STREAK-THRESHOLD u5)
 (define-constant REWARD-MULTIPLIER u2)
 
+(define-map user-streaks principal
+  { current-streak: uint, longest-streak: uint, last-tip-block: uint }
+)
+
