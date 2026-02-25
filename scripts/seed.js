@@ -9,3 +9,12 @@ const SAMPLE_CREATORS = [
   { name: 'Eve', description: 'Smart contract auditor', category: 'Security' },
 ];
 
+const SAMPLE_TIPS = [
+  { from: 0, to: 1, amount: 5000000, memo: 'Great art!' },
+  { from: 1, to: 2, amount: 2000000, memo: 'Thanks for the code review' },
+  { from: 2, to: 0, amount: 1000000, memo: 'Love the tutorial' },
+  { from: 3, to: 1, amount: 3000000, memo: 'Keep building!' },
+  { from: 4, to: 0, amount: 10000000, memo: 'Awesome work' },
+  { from: 0, to: 3, amount: 500000, memo: 'Community hero' },
+];
+
