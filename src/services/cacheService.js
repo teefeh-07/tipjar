@@ -137,3 +137,35 @@ export function getCacheStats() {
   };
 }
 
+// Periodic cleanup sweep
+function sweepExpired() {
+  let swept = 0;
+  for (const [key, entry] of cache.entries()) {
+    if (isExpired(entry)) {
+      cache.delete(key);
+      const idx = accessOrder.indexOf(key);
+      if (idx > -1) accessOrder.splice(idx, 1);
+      swept++;
+    }
+  }
+  if (swept > 0) console.debug(`Cache sweep: removed ${swept} expired entries`);
+}
+
+// Cache warming for common data
+export async function warmCache(warmingFns = []) {
+  console.debug('Warming cache...');
+  const results = await Promise.allSettled(
+    warmingFns.map(async ({ key, fn, ttl }) => {
+      const value = await fn();
+      cacheSet(key, value, ttl || DEFAULT_TTL * 5);
+      return key;
+    })
+  );
+  const success = results.filter(r => r.status === 'fulfilled').length;
+  console.debug(`Cache warmed: ${success}/${warmingFns.length} entries`);
+}
+
+// Initialize cache service
+export function initCache() {
+  setInterval(sweepExpired, SWEEP_INTERVAL);
+}
