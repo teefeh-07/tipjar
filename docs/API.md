@@ -21,3 +21,16 @@ Registers the current user as a creator in the tip registry.
 Queries the on-chain tip amount between two addresses.
 - **Returns** `Promise<ClarityValue>`
 
+### walletConnectService
+
+#### `initWalletConnect()`
+Initializes the WalletConnect SignClient and Modal.
+- **Returns** `Promise<SignClient>`
+
+#### `connectWallet()`
+Opens the WalletConnect modal and returns the session.
+- **Returns** `Promise<Session>`
+
+#### `disconnectWallet()`
+Disconnects the current WalletConnect session.
+
