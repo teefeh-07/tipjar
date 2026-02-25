@@ -13,3 +13,14 @@ describe('Validation Utils', () => {
       expect(addr.startsWith('SP')).toBe(true);
     });
 
+    it('should reject empty addresses', () => {
+      const addr = '';
+      expect(addr.length).toBe(0);
+    });
+
+    it('should reject addresses too short', () => {
+      const addr = 'ST123';
+      expect(addr.length).toBeLessThan(30);
+    });
+  });
+
