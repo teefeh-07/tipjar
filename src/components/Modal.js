@@ -122,3 +122,43 @@ export default function Modal({
     )
   );
 }
+
+// Confirm dialog component
+export function ConfirmDialog({ isOpen, onClose, onConfirm, title, message, confirmText = 'Confirm', cancelText = 'Cancel', variant = 'default' }) {
+  return React.createElement(Modal, {
+    isOpen, onClose, title: title || 'Confirm Action', size: 'sm',
+    footer: React.createElement('div', { className: 'confirm-actions' },
+      React.createElement('button', { className: 'btn-cancel', onClick: onClose }, cancelText),
+      React.createElement('button', {
+        className: `btn-confirm btn-${variant}`,
+        onClick: () => { onConfirm(); onClose(); }
+      }, confirmText)
+    )
+  }, React.createElement('p', null, message));
+}
+
+// Transaction detail modal
+export function TransactionModal({ isOpen, onClose, txId, status, amount, recipient }) {
+  return React.createElement(Modal, {
+    isOpen, onClose, title: 'Transaction Details', size: 'md'
+  },
+    React.createElement('div', { className: 'tx-details' },
+      React.createElement('div', { className: 'tx-row' },
+        React.createElement('span', null, 'TX ID'),
+        React.createElement('code', null, txId || 'Pending...')
+      ),
+      React.createElement('div', { className: 'tx-row' },
+        React.createElement('span', null, 'Status'),
+        React.createElement('span', { className: `tx-status tx-status--${status}` }, status)
+      ),
+      React.createElement('div', { className: 'tx-row' },
+        React.createElement('span', null, 'Amount'),
+        React.createElement('span', null, `${amount} STX`)
+      ),
+      React.createElement('div', { className: 'tx-row' },
+        React.createElement('span', null, 'Recipient'),
+        React.createElement('code', null, recipient)
+      )
+    )
+  );
+}
