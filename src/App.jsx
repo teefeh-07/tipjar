@@ -5,3 +5,6 @@ import Dashboard from './components/Dashboard.jsx';
 import SendTip from './components/SendTip.jsx';
 import TipHistory from './components/TipHistory.jsx';
 import Leaderboard from './components/Leaderboard.jsx';
+import { initWalletConnect } from './services/walletConnectService.js';
+import { initChainhooks } from './services/chainhooksService.js';
+
