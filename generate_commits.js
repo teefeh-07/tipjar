@@ -4,12 +4,16 @@ const { execSync } = require('child_process');
 
 const REPO = process.cwd();
 
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 function run(cmd) {
     try {
         console.log(`> ${cmd}`);
         return execSync(cmd, { cwd: REPO, stdio: 'pipe', encoding: 'utf-8' });
     } catch (e) {
-        console.error(`FAIL: ${cmd}\n${e.message}`);
+        console.error(`FAIL: ${cmd}\n${e.stderr || e.message}`);
         return null;
     }
 }
@@ -29,7 +33,7 @@ function commit(filePath, message) {
     run(`git commit -m "${message}"`);
 }
 
-function processBranch(branch) {
+async function processBranch(branch) {
     const { name, prTitle, prBody, commits } = branch;
     console.log(`\n=== Branch: ${name} (${commits.length} commits) ===`);
 
@@ -43,7 +47,7 @@ function processBranch(branch) {
             fileContents[c.file] = c.content;
         } else if (c.mode === 'append') {
             fileContents[c.file] = (fileContents[c.file] || '') + c.content;
-        } else if (c.mode === 'overwrite') {
+        } else {
             fileContents[c.file] = c.content;
         }
         writeFile(c.file, fileContents[c.file] || c.content);
@@ -51,29 +55,31 @@ function processBranch(branch) {
     }
 
     run(`git push origin ${name}`);
+    await sleep(2000);
 
     const safeTitle = prTitle.replace(/"/g, '\\"');
     const safeBody = prBody.replace(/"/g, '\\"').replace(/\n/g, '\\n');
     run(`gh pr create --title "${safeTitle}" --body "${safeBody}" --head ${name} --base main`);
 
-    const mergeResult = run(`gh pr merge ${name} --merge --delete-branch`);
+    await sleep(2000);
+
+    let mergeResult = run(`gh pr merge ${name} --merge --delete-branch`);
     if (!mergeResult) {
-        run(`gh pr merge ${name} --merge`);
+        await sleep(3000);
+        mergeResult = run(`gh pr merge ${name} --merge`);
     }
 
     run('git checkout main');
     run('git pull origin main');
+    await sleep(1000);
 }
 
-// Load and run all branch parts
 async function main() {
-    // Initial commit
     writeFile('.gitkeep', '');
     run('git add -A');
     run('git commit -m "chore: initialize repository"');
-    run('git push -u origin main');
+    run('git push -u origin main --force');
 
-    // Load all parts
     const partFiles = fs.readdirSync(REPO)
         .filter(f => f.startsWith('branches_part') && f.endsWith('.js'))
         .sort();
@@ -85,9 +91,9 @@ async function main() {
         console.log(`\nLoading ${pf}...`);
         const branches = require(path.join(REPO, pf));
         for (const branch of branches) {
-            processBranch(branch);
+            await processBranch(branch);
             totalBranches++;
-            totalCommits += branch.commits.length + 1; // +1 for merge commit
+            totalCommits += branch.commits.length + 1;
         }
     }
 
