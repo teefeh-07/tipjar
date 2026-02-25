@@ -80,3 +80,30 @@ function HourlyHeatmap({ data }) {
   );
 }
 
+// Conversion funnel visualization
+function ConversionFunnel({ funnel, conversionRate }) {
+  const maxCount = Math.max(...funnel.map(f => f.count), 1);
+  
+  return React.createElement('div', { className: 'funnel-container' },
+    React.createElement('h4', null, 'Conversion Funnel'),
+    React.createElement('div', { className: 'funnel-stages' },
+      funnel.map((stage, i) => {
+        const width = Math.max((stage.count / maxCount) * 100, 10);
+        return React.createElement('div', { key: i, className: 'funnel-stage' },
+          React.createElement('div', { className: 'funnel-label' }, stage.stage),
+          React.createElement('div', { className: 'funnel-bar-track' },
+            React.createElement('div', {
+              className: 'funnel-bar-fill',
+              style: { width: `${width}%` }
+            })
+          ),
+          React.createElement('div', { className: 'funnel-count' }, stage.count)
+        );
+      })
+    ),
+    React.createElement('p', { className: 'conversion-rate' },
+      `Overall conversion: ${conversionRate}%`
+    )
+  );
+}
+
