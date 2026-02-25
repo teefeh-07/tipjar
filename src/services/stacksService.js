@@ -86,3 +86,8 @@ export async function getPlatformStats() {
   return { totalTips, tipCount };
 }
 
+export async function fetchAccountBalance(address) {
+  const response = await fetch(`${API_URL}/extended/v1/address/${address}/balances`);
+  const data = await response.json();
+  return data.stx?.balance || '0';
+}
