@@ -34,3 +34,10 @@
   )
 )
 
+(define-read-only (get-creator (who principal))
+  (map-get? creators who)
+)
+
+(define-read-only (get-creator-count)
+  (ok (var-get creator-count))
+)
