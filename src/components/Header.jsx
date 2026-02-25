@@ -14,3 +14,9 @@ export default function Header() {
         <a href="#history" className="nav-link">History</a>
         <a href="#leaderboard" className="nav-link">Leaderboard</a>
       </nav>
+      <div className="header-actions">
+        <ConnectWallet />
+      </div>
+    </header>
+  );
+}
