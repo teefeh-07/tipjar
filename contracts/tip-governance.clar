@@ -7,3 +7,9 @@
 (define-constant ERR-VOTING-CLOSED (err u503))
 (define-constant VOTING-PERIOD u144)
 
+(define-data-var proposal-nonce uint u0)
+
+(define-map proposals uint
+  { title: (string-utf8 128), proposer: principal, votes-for: uint, votes-against: uint, start-block: uint, executed: bool }
+)
+
