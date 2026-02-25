@@ -28,3 +28,7 @@ history.txt
 .DS_Store
 Thumbs.db
 *.log
+
+# Coverage
+coverage/
+*.lcov
