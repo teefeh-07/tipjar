@@ -50,3 +50,27 @@ export function classifyError(error) {
   return ERROR_CATEGORIES.UNKNOWN;
 }
 
+// Handle an error with categorization and logging
+export function handleError(error, context = '') {
+  const category = classifyError(error);
+  const userMessage = ERROR_MESSAGES[category];
+  
+  const entry = {
+    timestamp: Date.now(),
+    category,
+    message: error.message,
+    stack: error.stack,
+    context,
+    userMessage,
+  };
+  
+  // Add to log (circular buffer)
+  errorLog.push(entry);
+  if (errorLog.length > MAX_ERROR_LOG) errorLog.shift();
+  
+  // Log to console with category color
+  console.error(`[${category.toUpperCase()}] ${context}: ${error.message}`);
+  
+  return { category, userMessage, originalError: error };
+}
+
