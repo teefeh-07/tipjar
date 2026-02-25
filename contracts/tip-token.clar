@@ -23,3 +23,11 @@
   (ok (some u"https://tipjar.app/token-metadata.json"))
 )
 
+(define-read-only (get-balance (account principal))
+  (ok (ft-get-balance tip-token account))
+)
+
+(define-read-only (get-total-supply)
+  (ok (ft-get-supply tip-token))
+)
+
