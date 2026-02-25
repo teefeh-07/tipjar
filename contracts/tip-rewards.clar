@@ -22,3 +22,7 @@
   )
 )
 
+(define-read-only (get-streak (user principal))
+  (map-get? user-streaks user)
+)
+
