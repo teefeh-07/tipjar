@@ -52,3 +52,29 @@ function ReputationBreakdown({ scores }) {
   );
 }
 
+// Badge collection grid
+function BadgeCollection({ badges }) {
+  if (!badges || badges.length === 0) {
+    return React.createElement('div', { className: 'badges-empty' },
+      React.createElement('p', null, 'No badges earned yet. Start tipping to earn your first badge! 🎯')
+    );
+  }
+  
+  return React.createElement('div', { className: 'badges-section' },
+    React.createElement('h3', null, '🏅 Badge Collection'),
+    React.createElement('div', { className: 'badges-grid' },
+      badges.map((badge, i) =>
+        React.createElement('div', {
+          key: i,
+          className: 'badge-card',
+          title: badge.description
+        },
+          React.createElement('div', { className: 'badge-icon' }, badge.emoji || '🏅'),
+          React.createElement('div', { className: 'badge-name' }, badge.name),
+          React.createElement('div', { className: 'badge-date' }, badge.earnedDate || 'Recently')
+        )
+      )
+    )
+  );
+}
+
