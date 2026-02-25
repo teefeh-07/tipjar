@@ -34,3 +34,7 @@ export async function processTip(recipient, amount, memo = '') {
   return tipRecord;
 }
 
+export function getTipHistory() {
+  return [...tipHistory].reverse();
+}
+
