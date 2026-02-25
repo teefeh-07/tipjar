@@ -9,3 +9,10 @@ export const WC_METADATA = {
   icons: ['https://tipjar.app/icon.png'],
 };
 
+export const WC_REQUIRED_NAMESPACES = {
+  stacks: {
+    methods: ['stacks_signMessage', 'stacks_stxTransfer', 'stacks_contractCall'],
+    chains: ['stacks:1'],
+    events: ['chainChanged', 'accountsChanged'],
+  },
+};
