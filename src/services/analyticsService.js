@@ -32,3 +32,11 @@ export const ANALYTICS_EVENTS = {
   BADGE_VIEWED: 'badge_viewed',
 };
 
+// Analytics state
+let eventQueue = [];
+let sessionId = null;
+let sessionStartTime = null;
+let metricsCache = {};
+const BATCH_SIZE = 25;
+const FLUSH_INTERVAL = 30000; // 30 seconds
+
