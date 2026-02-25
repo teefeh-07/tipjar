@@ -150,3 +150,47 @@ function scheduleReconnect() {
   }, jitter);
 }
 
+// Replay queued messages after reconnect
+function replayQueue() {
+  while (messageQueue.length > 0) {
+    const message = messageQueue.shift();
+    if (ws.readyState === WebSocket.OPEN) {
+      ws.send(message);
+    }
+  }
+}
+
+// Event emitter for internal listeners
+function emit(event, data) {
+  const listeners = eventListeners.get(event);
+  if (listeners) {
+    listeners.forEach(fn => fn(data));
+  }
+}
+
+// Add event listener
+export function on(event, handler) {
+  if (!eventListeners.has(event)) {
+    eventListeners.set(event, new Set());
+  }
+  eventListeners.get(event).add(handler);
+}
+
+// Remove event listener
+export function off(event, handler) {
+  const listeners = eventListeners.get(event);
+  if (listeners) listeners.delete(handler);
+}
+
+// Disconnect
+export function disconnect() {
+  stopHeartbeat();
+  if (reconnectTimer) clearTimeout(reconnectTimer);
+  if (ws) ws.close(1000, 'Client disconnect');
+  isConnected = false;
+}
+
+// Get connection status
+export function getConnectionStatus() {
+  return { isConnected, reconnectAttempts, queueSize: messageQueue.length };
+}
