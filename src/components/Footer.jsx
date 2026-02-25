@@ -9,3 +9,10 @@ export default function Footer() {
         <a href="/docs/contributing">Contributing</a>
         <a href="https://explorer.hiro.so" target="_blank" rel="noopener noreferrer">Stacks Explorer</a>
       </div>
+      <div className="footer-info">
+        <p>&copy; {new Date().getFullYear()} Tipjar. Built on Stacks blockchain.</p>
+        <p className="footer-tagline">Empowering creators through decentralized micro-tips.</p>
+      </div>
+    </footer>
+  );
+}
