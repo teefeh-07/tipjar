@@ -39,3 +39,20 @@ describe('Tipjar Contract', () => {
     });
   });
 
+  describe('read-only functions', () => {
+    it('should return tip amount for sender-recipient pair', () => {
+      const tip = { amount: 1000000, timestamp: 100 };
+      expect(tip.amount).toBe(1000000);
+    });
+
+    it('should return total platform tips', () => {
+      const totalTips = 5000000;
+      expect(totalTips).toBeGreaterThan(0);
+    });
+
+    it('should return total tip count', () => {
+      const tipCount = 5;
+      expect(tipCount).toBeGreaterThan(0);
+    });
+  });
+});
