@@ -1,3 +1,7 @@
 [network]
 name = "devnet"
 
+[accounts.deployer]
+mnemonic = "twice particular affair smile piece dough thrive dismiss invest primary iron opinion wish pig calm spread fence confirm meadow awkward surprise price tumble knee"
+balance = 100_000_000_000_000
+
