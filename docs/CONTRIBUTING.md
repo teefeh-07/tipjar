@@ -11,3 +11,16 @@ Thank you for your interest in contributing to Tipjar!
 5. Make your changes with micro-commits
 6. Push and create a PR
 
+## Commit Convention
+
+We use conventional commits:
+- `feat:` - New feature
+- `fix:` - Bug fix
+- `docs:` - Documentation
+- `test:` - Adding tests
+- `refactor:` - Code restructuring
+- `style:` - Formatting changes
+- `chore:` - Build/tooling changes
+
+Example: `feat: add tip amount validation to SendTip form`
+
