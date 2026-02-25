@@ -97,3 +97,88 @@ function SettingsSection({ title, icon, children }) {
   );
 }
 
+// Main SettingsPanel component
+export default function SettingsPanel() {
+  const [settings, setSettings] = useState(loadSettings());
+  const [saved, setSaved] = useState(false);
+  
+  const updateSetting = useCallback((section, key, value) => {
+    setSettings(prev => {
+      const updated = {
+        ...prev,
+        [section]: { ...prev[section], [key]: value }
+      };
+      saveSettings(updated);
+      setSaved(true);
+      setTimeout(() => setSaved(false), 2000);
+      return updated;
+    });
+  }, []);
+  
+  const resetSettings = useCallback(() => {
+    setSettings({ ...DEFAULT_SETTINGS });
+    saveSettings(DEFAULT_SETTINGS);
+    setSaved(true);
+    setTimeout(() => setSaved(false), 2000);
+  }, []);
+  
+  const exportData = useCallback(() => {
+    const data = {
+      settings,
+      analytics: JSON.parse(localStorage.getItem('tipjar_analytics') || '[]'),
+      exportDate: new Date().toISOString(),
+    };
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `tipjar-data-${Date.now()}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }, [settings]);
+
+  return React.createElement('div', { className: 'settings-panel' },
+    React.createElement('div', { className: 'settings-header' },
+      React.createElement('h2', null, '⚙️ Settings'),
+      saved && React.createElement('span', { className: 'save-indicator' }, '✓ Saved')
+    ),
+    // General settings
+    React.createElement(SettingsSection, { title: 'General', icon: '🎨' },
+      React.createElement(SelectSetting, {
+        id: 'theme', label: 'Theme', value: settings.general.theme,
+        options: [{ value: 'dark', label: 'Dark' }, { value: 'light', label: 'Light' }, { value: 'auto', label: 'System' }],
+        onChange: (v) => updateSetting('general', 'theme', v)
+      }),
+      React.createElement(ToggleSwitch, {
+        id: 'animations', label: 'Animations', checked: settings.general.animationsEnabled,
+        description: 'Enable smooth transitions and animations',
+        onChange: (v) => updateSetting('general', 'animationsEnabled', v)
+      })
+    ),
+    // Notification settings
+    React.createElement(SettingsSection, { title: 'Notifications', icon: '🔔' },
+      Object.entries(settings.notifications).map(([key, value]) =>
+        React.createElement(ToggleSwitch, {
+          key, id: `notif-${key}`, label: key.replace(/([A-Z])/g, ' $1').trim(),
+          checked: value,
+          onChange: (v) => updateSetting('notifications', key, v)
+        })
+      )
+    ),
+    // Privacy settings
+    React.createElement(SettingsSection, { title: 'Privacy', icon: '🔒' },
+      Object.entries(settings.privacy).map(([key, value]) =>
+        React.createElement(ToggleSwitch, {
+          key, id: `privacy-${key}`, label: key.replace(/([A-Z])/g, ' $1').trim(),
+          checked: value,
+          onChange: (v) => updateSetting('privacy', key, v)
+        })
+      )
+    ),
+    // Advanced
+    React.createElement(SettingsSection, { title: 'Advanced', icon: '🔧' },
+      React.createElement('button', { className: 'btn-export', onClick: exportData }, '📦 Export All Data'),
+      React.createElement('button', { className: 'btn-reset', onClick: resetSettings }, '🔄 Reset to Defaults')
+    )
+  );
+}
