@@ -48,3 +48,10 @@ export default function SendTip() {
         <label htmlFor="recipient">Recipient Address</label>
         <input id="recipient" type="text" value={recipient} onChange={e => setRecipient(e.target.value)} placeholder="ST..." required />
       </div>
+      <div className="form-group">
+        <label htmlFor="amount">Amount (STX)</label>
+        <input id="amount" type="number" step="0.000001" min="0.001" value={amount} onChange={e => setAmount(e.target.value)} placeholder="0.00" required />
+        <div className="presets">
+          {AMOUNT_PRESETS.map(p => <button key={p.value} type="button" onClick={() => handlePreset(p.value)} className="preset-btn">{p.label}</button>)}
+        </div>
+      </div>
