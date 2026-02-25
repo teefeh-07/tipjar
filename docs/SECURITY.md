@@ -15,3 +15,11 @@ If you discover a security vulnerability, please report it responsibly:
 3. Include steps to reproduce the vulnerability
 4. Allow 48 hours for an initial response
 
+## Security Practices
+
+- Smart contracts audited with Clarinet check_checker
+- No private keys stored in source code
+- Environment variables for all secrets
+- Input sanitization on all user inputs
+- Post-conditions enforced on contract calls
+- WalletConnect sessions properly scoped
