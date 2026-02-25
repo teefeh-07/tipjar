@@ -17,3 +17,21 @@ const CONTRACTS = [
 const network = new StacksTestnet();
 const DEPLOYER_KEY = process.env.DEPLOYER_PRIVATE_KEY || '';
 
+async function deployContract(contractName, contractFile) {
+  const codeBody = fs.readFileSync(path.resolve(contractFile), 'utf-8');
+  console.log(`Deploying ${contractName}...`);
+
+  const tx = await makeContractDeploy({
+    contractName,
+    codeBody,
+    senderKey: DEPLOYER_KEY,
+    network,
+    anchorMode: AnchorMode.Any,
+    fee: 10000n,
+  });
+
+  const result = await broadcastTransaction(tx, network);
+  console.log(`${contractName} deployed: ${result.txid}`);
+  return result;
+}
+
