@@ -65,3 +65,16 @@ export async function disconnectWallet() {
   }
 }
 
+export async function requestStxTransfer(recipient, amount) {
+  if (!currentSession) throw new Error('No active session');
+  const result = await signClient.request({
+    topic: currentSession.topic,
+    chainId: 'stacks:1',
+    request: {
+      method: 'stacks_stxTransfer',
+      params: { recipient, amount: amount.toString() },
+    },
+  });
+  return result;
+}
+
