@@ -7,3 +7,7 @@ export const NETWORK_CONFIG = {
   devnet: new StacksDevnet(),
 };
 
+export function getNetwork(env = 'testnet') {
+  return NETWORK_CONFIG[env] || NETWORK_CONFIG.testnet;
+}
+
