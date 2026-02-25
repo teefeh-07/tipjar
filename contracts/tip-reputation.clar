@@ -91,3 +91,34 @@
   )
 )
 
+;; Read-only: get user reputation
+(define-read-only (get-reputation (user principal))
+  (default-to
+    { total-score: u0, tip-score: u0, consistency-score: u0, receiving-score: u0, governance-score: u0, badge-score: u0, last-activity-block: u0, last-updated-block: u0 }
+    (map-get? reputation-scores { user: user })
+  )
+)
+
+;; Read-only: get reputation tier
+(define-read-only (get-reputation-tier (user principal))
+  (let
+    ((score (get total-score (get-reputation user))))
+    (if (>= score u500) "legendary"
+      (if (>= score u300) "gold"
+        (if (>= score u150) "silver"
+          (if (>= score u50) "bronze"
+            "newcomer"
+          )
+        )
+      )
+    )
+  )
+)
+
+;; Read-only: get platform reputation stats
+(define-read-only (get-reputation-stats)
+  {
+    total-users: (var-get total-scored-users),
+    highest-score: (var-get highest-score)
+  }
+)
