@@ -45,3 +45,14 @@ Registers a webhook for tip contract call events.
 #### `handleWebhookPayload(payload)`
 Processes incoming webhook payloads from Chainhooks.
 
+## Hooks
+
+### `useWallet()`
+Returns `{ connected, address, provider, connect, disconnect }`
+
+### `useTransaction()`
+Returns `{ txId, status, error, submit, checkStatus, reset }`
+
+### `useTipHistory(refreshInterval?)`
+Returns `{ history, loading, count }`
+
