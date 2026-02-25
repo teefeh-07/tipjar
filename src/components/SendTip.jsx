@@ -16,3 +16,22 @@ export default function SendTip() {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError(null);
+    setStatus(null);
+    setLoading(true);
+    try {
+      const amountMicro = Math.floor(parseFloat(amount) * 1000000);
+      const result = await processTip(recipient, amountMicro, memo);
+      setStatus(`Tip sent! TX: ${result.txId}`);
+      setRecipient('');
+      setAmount('');
+      setMemo('');
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
