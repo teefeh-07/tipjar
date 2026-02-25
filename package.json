@@ -14,3 +14,6 @@
     "deploy": "node scripts/deploy.js",
     "seed": "node scripts/seed.js"
   },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
