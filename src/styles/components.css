@@ -24,3 +24,22 @@
 .footer-links { display: flex; justify-content: center; gap: var(--space-6); margin-bottom: var(--space-4); }
 .footer-info p { color: var(--color-text-muted); font-size: var(--text-sm); }
 
+.app-main { max-width: 1200px; margin: 0 auto; padding: var(--space-8); }
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-4);
+  margin: var(--space-6) 0;
+}
+.stat-card {
+  background: var(--color-surface);
+  padding: var(--space-6);
+  border-radius: var(--radius-lg);
+  text-align: center;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--color-surface-alt);
+}
+.stat-card h3 { font-size: var(--text-2xl); color: var(--color-accent); }
+.stat-card p { color: var(--color-text-muted); font-size: var(--text-sm); margin-top: var(--space-1); }
+
