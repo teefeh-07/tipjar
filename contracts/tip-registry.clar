@@ -16,3 +16,7 @@
 
 (define-data-var creator-count uint u0)
 
+(define-public (register (name (string-utf8 64)) (description (string-utf8 256)) (category (string-utf8 32)))
+  (begin
+    (asserts! (is-none (map-get? creators tx-sender)) ERR-ALREADY-REGISTERED)
+    (asserts! (> (len name) u0) ERR-INVALID-NAME)
