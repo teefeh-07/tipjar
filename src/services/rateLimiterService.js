@@ -83,3 +83,19 @@ class SlidingWindowCounter {
   }
 }
 
+// Rate limiter instances per endpoint
+const limiters = new Map();
+const requestQueue = [];
+
+// Get or create limiter for endpoint
+function getLimiter(endpoint) {
+  if (!limiters.has(endpoint)) {
+    const config = RATE_LIMITS[endpoint] || RATE_LIMITS.default;
+    limiters.set(endpoint, {
+      window: new SlidingWindowCounter(config.maxRequests, config.windowMs),
+      bucket: new TokenBucket(config.burstCapacity, 1, config.windowMs / config.maxRequests),
+    });
+  }
+  return limiters.get(endpoint);
+}
+
