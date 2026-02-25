@@ -34,3 +34,9 @@ export interface WalletState {
   provider: 'hiro' | 'walletconnect' | null;
 }
 
+export interface TransactionResult {
+  txId: string;
+  status: string;
+  blockHeight?: number;
+}
+
