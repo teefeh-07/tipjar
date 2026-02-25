@@ -97,3 +97,22 @@ export function trackFeatureUsage(featureName, metadata = {}) {
   trackEvent(ANALYTICS_EVENTS.FEATURE_USED, { feature: featureName, ...metadata });
 }
 
+// Flush events to storage/API
+export function flushEvents() {
+  if (eventQueue.length === 0) return;
+  
+  const eventsToSend = [...eventQueue];
+  eventQueue = [];
+  
+  // Store in localStorage for offline access
+  try {
+    const stored = JSON.parse(localStorage.getItem('tipjar_analytics') || '[]');
+    const combined = [...stored, ...eventsToSend].slice(-1000); // Keep last 1000
+    localStorage.setItem('tipjar_analytics', JSON.stringify(combined));
+  } catch (err) {
+    console.warn('Analytics flush failed:', err.message);
+  }
+  
+  return eventsToSend;
+}
+
