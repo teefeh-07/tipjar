@@ -21,3 +21,9 @@ export function validateMemo(memo) {
   return { valid: true, error: null };
 }
 
+export function validateCreatorName(name) {
+  if (!name || name.trim().length === 0) return { valid: false, error: 'Name is required' };
+  if (name.length > 64) return { valid: false, error: 'Name must be 64 characters or less' };
+  return { valid: true, error: null };
+}
+
