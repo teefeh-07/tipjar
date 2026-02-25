@@ -174,3 +174,34 @@ export function computeFunnelMetrics() {
   }
 }
 
+// Export analytics data as JSON
+export function exportAnalyticsJSON() {
+  const events = JSON.parse(localStorage.getItem('tipjar_analytics') || '[]');
+  const metrics = computeTipMetrics();
+  const funnel = computeFunnelMetrics();
+  
+  return JSON.stringify({
+    exportDate: new Date().toISOString(),
+    totalEvents: events.length,
+    metrics,
+    funnel,
+    events,
+  }, null, 2);
+}
+
+// Export analytics data as CSV
+export function exportAnalyticsCSV() {
+  const events = JSON.parse(localStorage.getItem('tipjar_analytics') || '[]');
+  const headers = 'timestamp,type,sessionId,data\n';
+  const rows = events.map(e => 
+    `${new Date(e.timestamp).toISOString()},${e.type},${e.sessionId || ''},"${JSON.stringify(e.data).replace(/"/g, '\"')}"`
+  ).join('\n');
+  return headers + rows;
+}
+
+// Initialize analytics with periodic flushing
+export function initAnalytics() {
+  startSession();
+  setInterval(flushEvents, FLUSH_INTERVAL);
+  window.addEventListener('beforeunload', endSession);
+}
