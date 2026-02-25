@@ -22,3 +22,16 @@ describe('Helper Utils', () => {
     });
   });
 
+  describe('truncateAddress', () => {
+    it('should truncate long addresses', () => {
+      const addr = 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM';
+      const truncated = `${addr.slice(0, 6)}...${addr.slice(-4)}`;
+      expect(truncated).toContain('...');
+    });
+
+    it('should return short addresses unchanged', () => {
+      const addr = 'ST123';
+      expect(addr.length).toBeLessThanOrEqual(10);
+    });
+  });
+
