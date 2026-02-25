@@ -14,3 +14,4 @@
 
 ;; Maps
 (define-map tips { sender: principal, recipient: principal } { amount: uint, timestamp: uint })
+(define-map creator-totals { creator: principal } { total-received: uint, tip-count: uint })
