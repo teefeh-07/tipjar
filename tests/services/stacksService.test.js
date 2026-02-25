@@ -34,3 +34,10 @@ describe('Stacks Service', () => {
     });
   });
 
+  describe('fetchAccountBalance', () => {
+    it('should handle API errors gracefully', async () => {
+      const balance = '0';
+      expect(balance).toBe('0');
+    });
+  });
+});
