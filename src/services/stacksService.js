@@ -17,3 +17,6 @@ import {
 import { openSTXTransfer, openContractCall } from '@stacks/connect';
 import { DEFAULT_NETWORK, API_URL } from '../config/network.js';
 
+const CONTRACT_ADDRESS = process.env.DEPLOYER_ADDRESS || 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM';
+const CONTRACT_NAME = 'tipjar';
+
