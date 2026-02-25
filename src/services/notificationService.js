@@ -13,3 +13,9 @@ export function subscribe(callback) {
   };
 }
 
+function notify(notification) {
+  notificationQueue.push(notification);
+  if (notificationQueue.length > MAX_QUEUE_SIZE) notificationQueue.shift();
+  listeners.forEach(cb => cb(notification));
+}
+
