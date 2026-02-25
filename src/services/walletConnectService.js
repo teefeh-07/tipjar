@@ -9,3 +9,18 @@ let signClient = null;
 let currentSession = null;
 let walletConnectModal = null;
 
+export async function initWalletConnect() {
+  signClient = await SignClient.init({
+    projectId: WC_PROJECT_ID,
+    metadata: WC_METADATA,
+  });
+
+  walletConnectModal = new WalletConnectModal({
+    projectId: WC_PROJECT_ID,
+    chains: ['stacks:1'],
+  });
+
+  setupEventListeners();
+  return signClient;
+}
+
