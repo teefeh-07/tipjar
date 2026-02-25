@@ -32,3 +32,36 @@ function isStale(entry, staleThreshold = 0) {
   return Date.now() > entry.expiresAt && Date.now() < entry.expiresAt + staleThreshold;
 }
 
+// Get value from cache
+export function cacheGet(key) {
+  const entry = cache.get(key);
+  if (!entry) return null;
+  
+  if (isExpired(entry)) {
+    cache.delete(key);
+    return null;
+  }
+  
+  entry.lastAccessed = Date.now();
+  entry.hitCount++;
+  
+  // Move to end of access order (LRU)
+  const idx = accessOrder.indexOf(key);
+  if (idx > -1) accessOrder.splice(idx, 1);
+  accessOrder.push(key);
+  
+  return entry.value;
+}
+
+// Set value in cache
+export function cacheSet(key, value, ttl = DEFAULT_TTL) {
+  // Evict LRU entries if at capacity
+  while (cache.size >= MAX_ENTRIES && accessOrder.length > 0) {
+    const evictKey = accessOrder.shift();
+    cache.delete(evictKey);
+  }
+  
+  cache.set(key, createEntry(key, value, ttl));
+  accessOrder.push(key);
+}
+
