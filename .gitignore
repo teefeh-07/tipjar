@@ -17,3 +17,9 @@ node_modules/
 # Clarity
 .cache/
 history.txt
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
