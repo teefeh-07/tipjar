@@ -55,3 +55,11 @@ export default function SendTip() {
           {AMOUNT_PRESETS.map(p => <button key={p.value} type="button" onClick={() => handlePreset(p.value)} className="preset-btn">{p.label}</button>)}
         </div>
       </div>
+      <div className="form-group">
+        <label htmlFor="memo">Memo (optional)</label>
+        <input id="memo" type="text" value={memo} onChange={e => setMemo(e.target.value)} placeholder="Thanks for the great work!" maxLength={34} />
+      </div>
+      <button type="submit" disabled={loading} className="btn-send-tip">{loading ? 'Sending...' : 'Send Tip' }</button >
+    </form >
+  ); 
+}
