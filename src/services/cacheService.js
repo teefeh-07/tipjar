@@ -65,3 +65,33 @@ export function cacheSet(key, value, ttl = DEFAULT_TTL) {
   accessOrder.push(key);
 }
 
+// Cached fetch with stale-while-revalidate
+export async function cachedFetch(key, fetchFn, options = {}) {
+  const { ttl = DEFAULT_TTL, staleWhileRevalidate = 30000 } = options;
+  
+  // Check cache first
+  const entry = cache.get(key);
+  
+  if (entry && !isExpired(entry)) {
+    entry.lastAccessed = Date.now();
+    entry.hitCount++;
+    return entry.value;
+  }
+  
+  // Serve stale if within revalidation window
+  if (entry && isStale(entry, staleWhileRevalidate)) {
+    // Return stale data immediately, refresh in background
+    fetchFn().then(freshValue => {
+      cacheSet(key, freshValue, ttl);
+    }).catch(err => {
+      console.warn(`Background revalidation failed for ${key}:`, err.message);
+    });
+    return entry.value;
+  }
+  
+  // Cache miss: fetch fresh data
+  const value = await fetchFn();
+  cacheSet(key, value, ttl);
+  return value;
+}
+
