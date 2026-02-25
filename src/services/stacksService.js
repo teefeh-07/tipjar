@@ -54,3 +54,15 @@ export async function registerCreator(name, description, category) {
   return openContractCall(options);
 }
 
+export async function getTipAmount(sender, recipient) {
+  const result = await callReadOnlyFunction({
+    network: DEFAULT_NETWORK,
+    contractAddress: CONTRACT_ADDRESS,
+    contractName: CONTRACT_NAME,
+    functionName: 'get-tip',
+    functionArgs: [standardPrincipalCV(sender), standardPrincipalCV(recipient)],
+    senderAddress: sender,
+  });
+  return result;
+}
+
