@@ -49,3 +49,14 @@ export function getTipStats() {
   };
 }
 
+export function getTopRecipients(limit = 5) {
+  const recipientMap = {};
+  tipHistory.forEach(tip => {
+    if (!recipientMap[tip.recipient]) recipientMap[tip.recipient] = 0;
+    recipientMap[tip.recipient] += tip.amount;
+  });
+  return Object.entries(recipientMap)
+    .sort(([,a], [,b]) => b - a)
+    .slice(0, limit)
+    .map(([address, total]) => ({ address, total }));
+}
