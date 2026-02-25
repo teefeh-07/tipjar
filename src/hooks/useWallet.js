@@ -38,3 +38,5 @@ export default function useWallet() {
     setProvider(null);
   }, [provider]);
 
+  return { connected, address, provider, connect, disconnect };
+}
