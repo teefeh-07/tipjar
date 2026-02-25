@@ -45,3 +45,11 @@ tipjar/
 - **tip-rewards.clar**: Tracks tipping streaks and calculates multipliers
 - **tip-governance.clar**: Manages proposals and voting
 
+## Wallet Integration
+
+The platform supports two wallet providers:
+
+1. **Hiro Wallet** - Via @stacks/connect, uses `showConnect` and `openSTXTransfer`
+2. **WalletConnect** - Via @walletconnect/sign-client, supports any WC-compliant wallet
+
+The `useWallet` hook abstracts the provider difference from components.
