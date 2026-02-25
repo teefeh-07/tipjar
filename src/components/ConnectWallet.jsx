@@ -37,3 +37,12 @@ export default function ConnectWallet() {
     if (isConnected()) disconnectWallet();
   };
 
+  if (connected) {
+    return (
+      <div className="wallet-connected">
+        <span className="wallet-address">{address ? `${address.slice(0, 6)}...${address.slice(-4)}` : 'Connected'}</span>
+        <button onClick={handleDisconnect} className="btn-disconnect">Disconnect</button>
+      </div>
+    );
+  }
+
