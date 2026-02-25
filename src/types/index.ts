@@ -47,3 +47,12 @@ export interface Notification {
   timestamp: number;
 }
 
+export interface Proposal {
+  id: number;
+  title: string;
+  proposer: string;
+  votesFor: number;
+  votesAgainst: number;
+  startBlock: number;
+  executed: boolean;
+}
