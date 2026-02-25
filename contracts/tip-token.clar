@@ -7,3 +7,11 @@
 (define-constant ERR-INSUFFICIENT-BALANCE (err u201))
 (define-constant CONTRACT-OWNER tx-sender)
 
+(define-read-only (get-name)
+  (ok "Tip Token")
+)
+
+(define-read-only (get-symbol)
+  (ok "TIPT")
+)
+
