@@ -24,3 +24,6 @@ export const TX_STATUS = {
   DROPPED: 'dropped',
 };
 
+export const APP_NAME = 'Tipjar';
+export const APP_VERSION = '1.0.0';
+export const REFRESH_INTERVAL = 10000;
