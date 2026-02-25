@@ -8,3 +8,15 @@ export default function ConnectWallet() {
   const connected = isAuthenticated() || isConnected();
   const address = getStxAddress();
 
+  const handleHiroConnect = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      authenticate();
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
