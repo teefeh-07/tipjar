@@ -132,3 +132,47 @@ export function recordFailure(name) {
   }
 }
 
+// Retry with exponential backoff
+export async function retryWithBackoff(fn, options = {}) {
+  const { maxRetries = 3, baseDelay = 1000, maxDelay = 10000 } = options;
+  
+  for (let attempt = 0; attempt <= maxRetries; attempt++) {
+    try {
+      return await fn();
+    } catch (error) {
+      if (attempt === maxRetries) throw error;
+      
+      const category = classifyError(error);
+      // Don't retry validation errors
+      if (category === ERROR_CATEGORIES.VALIDATION) throw error;
+      
+      const delay = Math.min(baseDelay * Math.pow(2, attempt), maxDelay);
+      await new Promise(resolve => setTimeout(resolve, delay));
+    }
+  }
+}
+
+// Get error log for debugging
+export function getErrorLog() {
+  return [...errorLog];
+}
+
+// Get error summary statistics
+export function getErrorStats() {
+  const stats = {};
+  for (const category of Object.values(ERROR_CATEGORIES)) {
+    stats[category] = errorLog.filter(e => e.category === category).length;
+  }
+  return { totalErrors: errorLog.length, byCategory: stats };
+}
+
+// Global error handler setup
+export function initErrorHandler() {
+  window.addEventListener('unhandledrejection', (event) => {
+    handleError(event.reason || new Error('Unhandled promise rejection'), 'unhandledrejection');
+  });
+  
+  window.addEventListener('error', (event) => {
+    handleError(event.error || new Error(event.message), 'global');
+  });
+}
