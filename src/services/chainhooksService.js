@@ -47,3 +47,14 @@ export async function deleteWebhook(hookId) {
   return chainhooksClient.deleteHook(hookId);
 }
 
+export function handleWebhookPayload(payload) {
+  const { apply } = payload;
+  if (apply && apply.length > 0) {
+    for (const block of apply) {
+      for (const tx of block.transactions) {
+        console.log('Tip transaction detected:', tx.transaction_identifier);
+      }
+    }
+  }
+  return apply;
+}
