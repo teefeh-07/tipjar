@@ -116,3 +116,37 @@ function resubscribe() {
   }
 }
 
+// Heartbeat mechanism
+function startHeartbeat() {
+  stopHeartbeat();
+  heartbeatTimer = setInterval(() => {
+    if (isConnected) send('ping');
+  }, HEARTBEAT_INTERVAL);
+}
+
+function stopHeartbeat() {
+  if (heartbeatTimer) {
+    clearInterval(heartbeatTimer);
+    heartbeatTimer = null;
+  }
+}
+
+// Reconnection with exponential backoff and jitter
+function scheduleReconnect() {
+  if (reconnectTimer) return;
+  
+  const delay = Math.min(
+    INITIAL_RECONNECT_DELAY * Math.pow(2, reconnectAttempts),
+    MAX_RECONNECT_DELAY
+  );
+  const jitter = delay * (0.5 + Math.random() * 0.5);
+  
+  console.log(`Reconnecting in ${Math.round(jitter)}ms (attempt ${reconnectAttempts + 1})`);
+  
+  reconnectTimer = setTimeout(() => {
+    reconnectTimer = null;
+    reconnectAttempts++;
+    connect();
+  }, jitter);
+}
+
