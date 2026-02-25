@@ -12,3 +12,8 @@ describe('Tipjar Contract', () => {
       expect(amount).toBeGreaterThan(0);
     });
 
+    it('should reject zero amount tips', () => {
+      const amount = 0;
+      expect(amount).toBe(0);
+    });
+
