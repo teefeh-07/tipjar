@@ -1,2 +1,17 @@
 /* Component-specific styles */
 
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-4) var(--space-8);
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-surface-alt);
+  backdrop-filter: blur(12px);
+}
+.header-brand .logo { font-size: var(--text-2xl); color: var(--color-accent); font-weight: 700; }
+.header-brand .tagline { font-size: var(--text-xs); color: var(--color-text-muted); }
+.header-nav { display: flex; gap: var(--space-4); }
+.nav-link { color: var(--color-text-muted); font-size: var(--text-sm); }
+.nav-link:hover { color: var(--color-primary-light); }
+
