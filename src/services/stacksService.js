@@ -35,3 +35,22 @@ export async function sendTip(recipientAddress, amountInMicroStx) {
   return openSTXTransfer(options);
 }
 
+export async function registerCreator(name, description, category) {
+  const options = {
+    network: DEFAULT_NETWORK,
+    anchorMode: AnchorMode.Any,
+    contractAddress: CONTRACT_ADDRESS,
+    contractName: 'tip-registry',
+    functionName: 'register',
+    functionArgs: [
+      bufferCVFromString(name),
+      bufferCVFromString(description),
+      bufferCVFromString(category),
+    ],
+    postConditionMode: PostConditionMode.Deny,
+    postConditions: [],
+    onFinish: (data) => console.log('Registered:', data.txId),
+  };
+  return openContractCall(options);
+}
+
