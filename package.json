@@ -17,3 +17,6 @@
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "@stacks/connect": "^7.5.0",
+    "@stacks/transactions": "^6.10.0",
+    "@stacks/network": "^6.11.0",
