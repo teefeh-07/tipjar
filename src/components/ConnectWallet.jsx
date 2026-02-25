@@ -20,3 +20,15 @@ export default function ConnectWallet() {
     }
   };
 
+  const handleWCConnect = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      await connectWallet();
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
