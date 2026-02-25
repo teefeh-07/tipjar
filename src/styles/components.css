@@ -79,3 +79,20 @@
 .tip-status--confirmed { color: var(--color-success); }
 .tip-status--failed { color: var(--color-error); }
 
+.leaderboard { margin: var(--space-6) 0; }
+.leaderboard-list { list-style: none; }
+.leaderboard-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-2);
+}
+.rank { font-weight: 700; color: var(--color-primary-light); min-width: 2rem; }
+.address { font-family: var(--font-mono); font-size: var(--text-sm); min-width: 120px; }
+.bar-container { flex: 1; height: 8px; background: var(--color-surface-alt); border-radius: var(--radius-full); overflow: hidden; }
+.bar-fill { height: 100%; background: linear-gradient(90deg, var(--color-primary), var(--color-accent)); border-radius: var(--radius-full); transition: width 0.3s ease; }
+.total { font-weight: 600; color: var(--color-accent); min-width: 80px; text-align: right; }
+
