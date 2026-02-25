@@ -22,3 +22,20 @@ const PLATFORMS = {
   },
 };
 
+// Generate tip receipt data
+export function generateTipReceipt(tipData) {
+  const { sender, recipient, amount, memo, txId, timestamp } = tipData;
+  
+  return {
+    id: `receipt_${Date.now()}`,
+    sender: truncateAddress(sender),
+    recipient: truncateAddress(recipient),
+    amount: formatStx(amount),
+    memo: memo || 'No memo',
+    txId,
+    timestamp: new Date(timestamp).toLocaleString(),
+    appName: APP_NAME,
+    receiptUrl: `https://tipjar.app/tx/${txId}`,
+  };
+}
+
