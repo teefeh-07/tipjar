@@ -24,3 +24,11 @@ We use conventional commits:
 
 Example: `feat: add tip amount validation to SendTip form`
 
+## Branch Naming
+
+- `feature/description` - New features
+- `fix/description` - Bug fixes
+- `docs/description` - Documentation
+- `test/description` - Test additions
+- `setup/description` - Configuration
+
