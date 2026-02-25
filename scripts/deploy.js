@@ -14,3 +14,6 @@ const CONTRACTS = [
   { name: 'tip-governance', file: 'contracts/tip-governance.clar' },
 ];
 
+const network = new StacksTestnet();
+const DEPLOYER_KEY = process.env.DEPLOYER_PRIVATE_KEY || '';
+
