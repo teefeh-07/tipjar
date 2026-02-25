@@ -78,3 +78,25 @@ function BadgeCollection({ badges }) {
   );
 }
 
+// Activity timeline component
+function ActivityTimeline({ activities }) {
+  return React.createElement('div', { className: 'timeline-section' },
+    React.createElement('h3', null, '📋 Recent Activity'),
+    React.createElement('div', { className: 'timeline' },
+      (activities || []).slice(0, 20).map((activity, i) =>
+        React.createElement('div', {
+          key: i,
+          className: `timeline-entry ${i % 2 === 0 ? 'left' : 'right'}`
+        },
+          React.createElement('div', { className: 'timeline-dot' }),
+          React.createElement('div', { className: 'timeline-content' },
+            React.createElement('div', { className: 'timeline-type' }, activity.type),
+            React.createElement('div', { className: 'timeline-desc' }, activity.description),
+            React.createElement('div', { className: 'timeline-time' }, activity.time)
+          )
+        )
+      )
+    )
+  );
+}
+
