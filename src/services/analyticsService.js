@@ -40,3 +40,34 @@ let metricsCache = {};
 const BATCH_SIZE = 25;
 const FLUSH_INTERVAL = 30000; // 30 seconds
 
+// Generate session ID
+function generateSessionId() {
+  return `session_${Date.now()}_${Math.random().toString(36).slice(2, 10)}`;
+}
+
+// Start a new analytics session
+export function startSession() {
+  sessionId = generateSessionId();
+  sessionStartTime = Date.now();
+  trackEvent(ANALYTICS_EVENTS.SESSION_STARTED, {
+    sessionId,
+    timestamp: new Date().toISOString(),
+    userAgent: typeof navigator !== 'undefined' ? navigator.userAgent : 'unknown',
+  });
+  return sessionId;
+}
+
+// End current session
+export function endSession() {
+  if (!sessionId) return;
+  const duration = Date.now() - sessionStartTime;
+  trackEvent(ANALYTICS_EVENTS.SESSION_ENDED, {
+    sessionId,
+    duration,
+    timestamp: new Date().toISOString(),
+  });
+  flushEvents();
+  sessionId = null;
+  sessionStartTime = null;
+}
+
