@@ -37,3 +37,32 @@
 (define-data-var highest-score uint u0)
 (define-data-var max-actions-per-block uint u5)
 
+;; Record tipping activity (called by tipjar contract)
+(define-public (record-tip-activity (user principal))
+  (let
+    (
+      (existing (default-to
+        { total-score: u0, tip-score: u0, consistency-score: u0, receiving-score: u0, governance-score: u0, badge-score: u0, last-activity-block: u0, last-updated-block: u0 }
+        (map-get? reputation-scores { user: user })
+      ))
+      (new-tip-score (+ (get tip-score existing) u1))
+      (capped-tip (if (> new-tip-score u100) u100 new-tip-score))
+      (new-total (+ capped-tip (get consistency-score existing) (get receiving-score existing) (get governance-score existing) (get badge-score existing)))
+    )
+    (map-set reputation-scores
+      { user: user }
+      (merge existing {
+        tip-score: capped-tip,
+        total-score: new-total,
+        last-activity-block: block-height,
+        last-updated-block: block-height
+      })
+    )
+    (if (> new-total (var-get highest-score))
+      (var-set highest-score new-total)
+      true
+    )
+    (ok new-total)
+  )
+)
+
