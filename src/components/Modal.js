@@ -63,3 +63,62 @@ const SIZE_CLASSES = {
   fullscreen: 'modal-fullscreen',
 };
 
+// Main Modal component
+export default function Modal({
+  isOpen,
+  onClose,
+  title,
+  children,
+  size = 'md',
+  closeOnBackdrop = true,
+  closeOnEscape = true,
+  showCloseButton = true,
+  footer,
+  className = '',
+}) {
+  const modalRef = useRef(null);
+  
+  useFocusTrap(modalRef, isOpen);
+  useScrollLock(isOpen);
+  
+  // Handle escape key
+  useEffect(() => {
+    if (!isOpen || !closeOnEscape) return;
+    
+    function handleEscape(e) {
+      if (e.key === 'Escape') onClose();
+    }
+    document.addEventListener('keydown', handleEscape);
+    return () => document.removeEventListener('keydown', handleEscape);
+  }, [isOpen, closeOnEscape, onClose]);
+  
+  if (!isOpen) return null;
+  
+  return React.createElement('div', {
+    className: 'modal-overlay',
+    onClick: closeOnBackdrop ? onClose : undefined
+  },
+    React.createElement('div', {
+      ref: modalRef,
+      className: `modal-container ${SIZE_CLASSES[size] || SIZE_CLASSES.md} ${className}`,
+      role: 'dialog',
+      'aria-modal': true,
+      'aria-labelledby': 'modal-title',
+      onClick: (e) => e.stopPropagation()
+    },
+      // Header
+      React.createElement('div', { className: 'modal-header' },
+        React.createElement('h3', { id: 'modal-title' }, title),
+        showCloseButton && React.createElement('button', {
+          className: 'modal-close',
+          onClick: onClose,
+          'aria-label': 'Close modal'
+        }, '×')
+      ),
+      // Body
+      React.createElement('div', { className: 'modal-body' }, children),
+      // Footer
+      footer && React.createElement('div', { className: 'modal-footer' }, footer)
+    )
+  );
+}
