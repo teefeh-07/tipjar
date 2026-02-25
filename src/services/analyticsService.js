@@ -150,3 +150,27 @@ export function computeTipMetrics() {
   }
 }
 
+// Compute engagement funnel metrics
+export function computeFunnelMetrics() {
+  try {
+    const events = JSON.parse(localStorage.getItem('tipjar_analytics') || '[]');
+    
+    const walletsConnected = events.filter(e => e.type === ANALYTICS_EVENTS.WALLET_CONNECTED).length;
+    const tipsInitiated = events.filter(e => e.type === ANALYTICS_EVENTS.TIP_INITIATED).length;
+    const tipsConfirmed = events.filter(e => e.type === ANALYTICS_EVENTS.TIP_CONFIRMED).length;
+    const subscriptionsCreated = events.filter(e => e.type === ANALYTICS_EVENTS.SUBSCRIPTION_CREATED).length;
+    
+    return {
+      funnel: [
+        { stage: 'Wallet Connected', count: walletsConnected },
+        { stage: 'Tip Initiated', count: tipsInitiated },
+        { stage: 'Tip Confirmed', count: tipsConfirmed },
+        { stage: 'Subscribed', count: subscriptionsCreated },
+      ],
+      conversionRate: walletsConnected > 0 ? (tipsConfirmed / walletsConnected * 100).toFixed(1) : '0.0',
+    };
+  } catch (err) {
+    return { funnel: [], conversionRate: '0.0' };
+  }
+}
+
