@@ -23,3 +23,8 @@
   )
 )
 
+(define-public (vote (proposal-id uint) (vote-for bool))
+  (let ((proposal (unwrap! (map-get? proposals proposal-id) ERR-NO-PROPOSAL)))
+    (asserts! (is-none (map-get? votes { proposal-id: proposal-id, voter: tx-sender })) ERR-ALREADY-VOTED)
+    (asserts! (<= (- stacks-block-height (get start-block proposal)) VOTING-PERIOD) ERR-VOTING-CLOSED)
+    (map-set votes { proposal-id: proposal-id, voter: tx-sender } { vote: vote-for })
