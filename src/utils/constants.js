@@ -11,3 +11,9 @@ export const MAX_TIP_STX = 100;
 export const MIN_TIP_MICRO = MIN_TIP_STX * MICRO_STX;
 export const MAX_TIP_MICRO = MAX_TIP_STX * MICRO_STX;
 
+export const NETWORKS = {
+  MAINNET: 'mainnet',
+  TESTNET: 'testnet',
+  DEVNET: 'devnet',
+};
+
