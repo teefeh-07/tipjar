@@ -11,3 +11,24 @@
 (define-constant DECAY-RATE uint u10) ;; 1% per 1000 blocks
 (define-constant DECAY-INTERVAL uint u1000)
 
+;; Reputation score storage
+(define-map reputation-scores
+  { user: principal }
+  {
+    total-score: uint,
+    tip-score: uint,
+    consistency-score: uint,
+    receiving-score: uint,
+    governance-score: uint,
+    badge-score: uint,
+    last-activity-block: uint,
+    last-updated-block: uint
+  }
+)
+
+;; Activity cooldown to prevent gaming
+(define-map activity-cooldown
+  { user: principal }
+  { last-action-block: uint, actions-this-block: uint }
+)
+
