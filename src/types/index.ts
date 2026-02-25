@@ -1,0 +1,58 @@
+// Type definitions for Tipjar project
+
+export interface Tip {
+  id: string;
+  sender: string;
+  recipient: string;
+  amount: number;
+  memo: string;
+  timestamp: string;
+  txId: string | null;
+  status: 'pending' | 'confirmed' | 'failed';
+}
+
+export interface Creator {
+  address: string;
+  name: string;
+  description: string;
+  category: string;
+  active: boolean;
+  totalReceived: number;
+  tipCount: number;
+}
+
+export interface TipStats {
+  totalTips: number;
+  totalAmount: number;
+  uniqueRecipients: number;
+  averageTip: number;
+}
+
+export interface WalletState {
+  connected: boolean;
+  address: string | null;
+  provider: 'hiro' | 'walletconnect' | null;
+}
+
+export interface TransactionResult {
+  txId: string;
+  status: string;
+  blockHeight?: number;
+}
+
+export interface Notification {
+  type: 'success' | 'info' | 'error' | 'warning';
+  title: string;
+  message: string;
+  timestamp: number;
+}
+
+export interface Proposal {
+  id: number;
+  title: string;
+  proposer: string;
+  votesFor: number;
+  votesAgainst: number;
+  startBlock: number;
+  executed: boolean;
+}
