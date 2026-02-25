@@ -14,3 +14,15 @@
 (define-constant ERR-TRANSFER-BLOCKED (err u505))
 (define-constant CONTRACT-OWNER tx-sender)
 
+;; Badge type definitions
+(define-constant BADGE-FIRST-TIP u1)
+(define-constant BADGE-GENEROUS-TIPPER u2)
+(define-constant BADGE-WHALE-TIPPER u3)
+(define-constant BADGE-STREAK-MASTER u4)
+(define-constant BADGE-DIAMOND-HANDS u5)
+(define-constant BADGE-TOP-CREATOR u6)
+
+;; State variables
+(define-data-var next-badge-id uint u1)
+(define-data-var total-badges-minted uint u0)
+
